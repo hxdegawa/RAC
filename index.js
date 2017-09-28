@@ -70,8 +70,6 @@ $(function(){
 
     });
 
-  
-  
 //  create list of undone report
   
     $(function(){
@@ -85,7 +83,7 @@ $(function(){
         success: function(data) {
           var result = $($.parseHTML(data));
           for(var i = 0; i < result.eq(9).find(".normal > a").length; i++){unFinishedTitle.push(result.eq(9).find(".normal > a")[i].text)};
-          for(var i = 0; i < result.eq(9).find(".normal > a").length; i++){unFinishedURL.push(result.eq(9).find(".normal > a")[i].href)};
+          for(var i = 0; i < result.eq(9).find(".normal > a").length; i++){unFinishedURL.push("https://secure.nnn.ed.jp" + result.eq(9).find(".normal > a").eq(0).attr("href"))};
           for(var i = 0; i < result.eq(9).find(".normal > a").length; i++){
             $(".undone-list-container").append('<p class="undone-list"><a target="_blank" href="' + unFinishedURL[i] + '">' + unFinishedTitle[i] + '</a></p><hr />');
           };
