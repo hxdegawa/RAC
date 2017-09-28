@@ -1,11 +1,11 @@
 {
-  "name": "Youtubate",
+  "name": "Improve'N",
   "version": "1.0.0",
   "manifest_version": 2,
   "icons": {
     "128": "./icon.png"
   },
-  "description": "FUCK YOU",
+  "description": "Improvement & innovation for N-Highschool movie-class learning",
   "browser_action": {
     "default_icon": "icon.png"
   },
