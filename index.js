@@ -22,6 +22,7 @@ $(function(){
   
   $(".rate-right").click(function(){
     control.fastForward = !control.fastForward;
+    control.fastRewind = false;
     if(control.fastForward){
       document.getElementsByTagName("video")[0].playbackRate = 2;
     }else{
@@ -31,6 +32,7 @@ $(function(){
   
   $(".rate-left").click(function(){
     control.fastRewind = !control.fastRewind;
+    control.fastForward = false;
     if(control.fastRewind){
       document.getElementsByTagName("video")[0].playbackRate = 0.5;
     }else{
