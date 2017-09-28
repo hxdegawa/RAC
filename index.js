@@ -74,7 +74,7 @@ $(function(){
   
     $(function(){
 
-      $("body").append('<div class="undone-list-container"><h1>未完了レポート</h1></div>');
+      $("body").append('<div class="undone-list-container"><h1>未完了レポート</h1><div class="undone-list-container-close"><i class="material-icons">close</i></div></div>');
       
       $.ajax({
         type: 'GET',
@@ -90,6 +90,9 @@ $(function(){
         }, error:function(e) {
           console.log(e);
         }
+      });
+      $(".undone-list-container-close").click(function(){
+        $(".undone-list-container").removeClass("visible");
       });
     });
   };
