@@ -1,21 +1,31 @@
-#moviePlayer{
+video{
   position: relative;
   overflow: hidden;
 }
 
 #movie-controller{
   position: absolute;
-  bottom: -40px;
+  left: 0px;
+  bottom: -100px;
   opacity: 0.4;
   width: 100%;
-  height: 60px;
+  height: 120px;
   text-align: center;
   transition: 0.2s ease;
+  user-select: none;
 }
 
 #movie-controller:hover{
-  bottom: 0px;
+  bottom: -60px;
   opacity: 1;
+}
+
+#movie-controller.advanced{
+  bottom: -100px;
+}
+
+#movie-controller.advanced:hover{
+  bottom: 0px;
 }
 
 .swich-controller{
@@ -33,6 +43,15 @@
   transform: scale(1.0, 1.0);
 }
 
+.swich-controller i{
+  line-height: 40px;
+  vertical-align: top;
+}
+
 .swich-controller:hover{
   transform: scale(1.1, 1.1);
+}
+
+.swich-controller.col5{
+  margin: 10px 24px 10px 24px;
 }
