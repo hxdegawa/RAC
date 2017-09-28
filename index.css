@@ -1,0 +1,38 @@
+#moviePlayer{
+  position: relative;
+  overflow: hidden;
+}
+
+#movie-controller{
+  position: absolute;
+  bottom: -40px;
+  opacity: 0.4;
+  width: 100%;
+  height: 60px;
+  text-align: center;
+  transition: 0.2s ease;
+}
+
+#movie-controller:hover{
+  bottom: 0px;
+  opacity: 1;
+}
+
+.swich-controller{
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 0px 20px;
+  margin: 10px 30px 10px 30px;
+  height: 40px;
+  vertical-align: top;
+  line-height: 40px;
+  cursor: pointer;
+  background-color: #212121;
+  color: #ffffff;
+  transition: 0.2s ease;
+  transform: scale(1.0, 1.0);
+}
+
+.swich-controller:hover{
+  transform: scale(1.1, 1.1);
+}
