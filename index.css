@@ -1,3 +1,7 @@
+body{
+  margin: 0px !important;
+}
+
 video{
   position: relative;
   overflow: hidden;
@@ -7,12 +11,13 @@ video{
   position: absolute;
   left: 0px;
   bottom: -100px;
-  opacity: 0.4;
+  opacity: 0.3;
   width: 100%;
   height: 120px;
   text-align: center;
-  transition: 0.2s ease;
+  transition: 0.3s ease;
   user-select: none;
+  z-index: 500;
 }
 
 #movie-controller:hover{
@@ -39,7 +44,7 @@ video{
   cursor: pointer;
   background-color: #212121;
   color: #ffffff;
-  transition: 0.2s ease;
+  transition: 0.3s ease;
   transform: scale(1.0, 1.0);
 }
 
@@ -53,5 +58,50 @@ video{
 }
 
 .swich-controller.col5{
-  margin: 10px 24px 10px 24px;
+  margin: 10px 12px 10px 12px;
+}
+
+.undone-list-container{
+  z-index: 5;
+  position: absolute;
+  transition: 0.3s ease;
+  left: 0px;
+  top: 0px;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  pointer-events: none;
+  background-color: #ffffff;
+  overflow: scroll;
+}
+
+.undone-list-container.visible{
+  opacity: 1;
+  pointer-events: all;
+}
+
+.undone-list-container h1{
+  box-sizing: border-box;
+  font-size: 1.6em;
+  font-weight: 100;
+  color: #212121;
+  padding: 10px 0px;
+  margin: 5px 0px;
+}
+
+.undone-list{
+  box-sizing: border-box;
+  padding: 0px 20px;
+  margin: 10px 0px;
+  font-size: 1.2em;
+}
+
+.undone-list a{
+  color: #212121;
+  text-decoration: none;
+  transition: 0.15s ease;
+}
+
+.undone-list a:hover{
+  text-shadow: 0px 0px 3px orange;
 }

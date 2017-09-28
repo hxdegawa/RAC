@@ -1,6 +1,6 @@
 {
   "name": "Improve'N",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "manifest_version": 2,
   "icons": {
     "128": "./icon.png"
@@ -11,8 +11,8 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://ww3.tokyo-shoseki.co.jp/api/dwango/requestContents.php?*"],
-      "js": ["jquery-1.12.4.min.js", "index.js"],
+      "matches": ["https://ww3.tokyo-shoseki.co.jp/api/dwango/requestContents.php?*", "https://secure.nnn.ed.jp/mypage/report/pc/list/index"],
+      "js": ["jquery-3.2.1.min.js", "index.js"],
       "css": ["index.css"],
       "run_at": "document_idle",
       "all_frames": true
