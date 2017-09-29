@@ -178,6 +178,10 @@ iframe{
   opacity: 0.2;
 }
 
+.controller.first-exhibition{
+  opacity: 1 !important;
+}
+
 .controller.visible{
   top: 0px;
 }
@@ -188,6 +192,8 @@ iframe{
 
 .controller-inner-container{
   position: relative;
+  box-sizing: border-box;
+  padding-top: 10px;
   height: 100%;
   width: 100%;
 }
@@ -199,7 +205,8 @@ iframe{
 
 .progress-bar-container{
   position: relative;
-  margin: 10px 2% 0px 2%;
+  cursor: pointer;
+  margin: 0px 2% 0px 2%;
   width: 96%;
   height: 6px;
   background-color: #000000;
