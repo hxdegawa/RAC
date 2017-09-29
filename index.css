@@ -127,3 +127,37 @@ video{
   vertical-align: top;
   pointer-events: none;
 }
+
+.movie-toast{
+  position: absolute;
+  transition: 0.15s ease;
+  box-sizing: border-box;
+  z-index: 50;
+  background-color: #212121;
+  padding: 0px 12px;
+  right: 0px;
+  top: 0px;
+  width: 200px;
+  height: 50px;
+  text-align: left;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.movie-toast.visible{
+  opacity: 1;
+}
+
+.movie-toast span{
+  color: #ffffff;
+  line-height: 50px;
+  vertical-align: top;
+  font-size: 1.2em;
+}
+
+.material-icons.toast-icon{
+  line-height: 50px;
+  vertical-align: top;
+  font-size: 3em;
+  color: #ffffff;
+}
