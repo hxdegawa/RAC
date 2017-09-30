@@ -5,8 +5,40 @@ $(function(){
   };
   
   if(location.href.indexOf('https://secure.nnn.ed.jp/mypage/report/pc/movie/view?') != -1){
+    
+    let automator = true,
+        movieDuration = 0;
+    
     $("head").find("title").remove();
     $("head").append('<title>' + $("#breadcrumbs > ul > li").eq(3).text() + '</title>');
+    
+    $(window).on("message", function(e){
+      
+      if(e.originalEvent.data === "check"){
+        if(typeof $("#nextMovie").attr("disabled") === "string"){
+          $('.tokyo_thumbnail').get(0).contentWindow.postMessage('not_done', 'https://ww3.tokyo-shoseki.co.jp');
+        }else{
+          $('.tokyo_thumbnail').get(0).contentWindow.postMessage('already_done', 'https://ww3.tokyo-shoseki.co.jp');
+        };
+      }else if(typeof e.originalEvent.data === "object"){
+        movieDuration = e.originalEvent.data.movieLength;
+        setTimeout(function(){
+          if(automator){
+            if($("#nextMovie").length){
+              $("#nextMovie").click();
+            }else if($("#nextTest").length){
+              $("#nextTest").click();
+            };
+          }else{
+            $('.tokyo_thumbnail').get(0).contentWindow.postMessage('movie_stopped', 'https://ww3.tokyo-shoseki.co.jp');
+          };
+        },movieDuration * 1000);
+      }else if(typeof e.originalEvent.data === "boolean"){
+        automator = e.originalEvent.data;
+      };
+
+    });
+    
   };
   
   if(location.href.indexOf('https://ww3.tokyo-shoseki.co.jp/api/dwango/requestContents.php?') != -1){
@@ -24,13 +56,15 @@ $(function(){
         unFinishedTitle = [],
         unFinishedURL = [],
         volumeIndex = 1,
+        controllerVisible = false,
+        automated = true,
         toastShow,
         exhibition;
 
     $("body").append('<div class="movie-toast"><span></span></div><div id="movie-controller"></div><div class="undone-list-container"><h1>未完了レポート</h1><div class="undone-list-container-close"><i class="material-icons">close</i></div></div>');
-    $("body").prepend('<div class="controller"><div class="controller-inner-container"><div class="progress-bar-container"><div class="progress-bar"></div></div><p><span class="movie-time"></span><span> / </span><span class="movie-duration"></span></p></div></div>');
+    $("body").prepend('<div class="controller"><div class="controller-inner-container"><div class="progress-bar-container"><div class="progress-bar"></div></div><p><span class="movie-time"></span><span> / </span><span class="movie-duration"></span></p><div class="mute"><i class="material-icons icon-mute">volume_up</i></div></div></div>');
     $("head").prepend('<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />');
-    $("#movie-controller").append('<div class="swich-controller swich-left"><i class="material-icons">chevron_left</i></div><div class="swich-controller control"><i class="material-icons">videogame_asset</i></div><div class="swich-controller master"><i class="material-icons">settings</i></div><div class="swich-controller volume"><i class="material-icons volume-icon">volume_up</i></div><div class="swich-controller swich-right"><i class="material-icons">chevron_right</i></div><br /><div class="swich-controller col5 rate-left"><i class="material-icons">fast_rewind</i></div><div class="swich-controller col5 mute"><i class="material-icons">volume_off</i></div><div class="swich-controller col5 fullscreen"><i class="material-icons">fullscreen</i></div><div class="swich-controller col5 check-list"><i class="material-icons">list</i></div><a class="movie-download-link" target="_blank"><div class="swich-controller col5 download"><i class="material-icons">file_download</i></div></a><div class="swich-controller col5 rate-right"><i class="material-icons">fast_forward</i></div>');
+    $("#movie-controller").append('<div class="swich-controller swich-left"><i class="material-icons">chevron_left</i></div><div class="swich-controller control"><i class="material-icons">videogame_asset</i></div><div class="swich-controller master"><i class="material-icons">settings</i></div><div class="swich-controller volume"><i class="material-icons volume-icon">volume_up</i></div><div class="swich-controller swich-right"><i class="material-icons">chevron_right</i></div><br /><div class="swich-controller col5 rate-left"><i class="material-icons">fast_rewind</i></div><div class="swich-controller col5 automate"><i class="material-icons icon-automate">explore</i></div><div class="swich-controller col5 fullscreen"><i class="material-icons">fullscreen</i></div><div class="swich-controller col5 check-list"><i class="material-icons">list</i></div><a class="movie-download-link" target="_blank"><div class="swich-controller col5 download"><i class="material-icons">file_download</i></div></a><div class="swich-controller col5 rate-right"><i class="material-icons">fast_forward</i></div>');
 
     //  create list of undone report
   
@@ -52,14 +86,15 @@ $(function(){
         }
       });
       
-      setTimeout(function(){$("#video01").removeAttr("controls"); $(".movie-duration").text((Math.floor(document.getElementsByTagName("video")[0].duration / 60)) + ":" + ("0" + Math.round(document.getElementsByTagName("video")[0].duration % 60)).slice(-2))}, 1000);
-      
     });
 
-    $(".movie-download-link").attr({"title": "Download", "download": "Classroom.mp4", "href": document.getElementsByTagName("source")[0].src});
+    $(".movie-download-link").attr({
+      "title": "Download", "download": "Classroom.mp4", "href": document.getElementsByTagName("source")[0].src
+    });
 
     $(".control").click(function(){
       $(".controller").toggleClass("visible");
+      controllerVisible = !controllerVisible;
       if($(".controller").hasClass("visible")){
         $(".controller").addClass("first-exhibition");
         window.clearTimeout(exhibition);
@@ -71,7 +106,6 @@ $(function(){
         document.getElementsByTagName("video")[0].volume = volumeStatus[volumeIndex].volume;
         toast("音量を" + volumeStatus[volumeIndex].status + "に設定");
         $(".volume-icon").text(volumeStatus[volumeIndex].icon);
-      console.log(volumeIndex);
       if(volumeIndex !== 2){
         volumeIndex ++;
       }else{
@@ -120,10 +154,18 @@ $(function(){
       control.muted = !control.muted;
       if(control.muted){
         document.getElementsByTagName("video")[0].muted = true;
+        $(".icon-mute").text("volume_off");
       }else{
         document.getElementsByTagName("video")[0].muted = false;
+        $(".icon-mute").text("volume_up");
       };
       toast("音声をミュート");
+    });
+    
+    $(".automate").click(function(){
+      $(".icon-automate").toggleClass("inactive");
+      automated = !automated;
+      window.parent.postMessage(automated, 'https://secure.nnn.ed.jp');
     });
 
     $(".fullscreen").click(function(){
@@ -150,15 +192,33 @@ $(function(){
       $(".movie-time").text(Math.floor(this.currentTime / 60) + ":" + ("0" + Math.round(this.currentTime % 60)).slice(-2));
     });
     
+    $("#video01").on("canplaythrough", function(){
+      $(this).removeAttr("controls"); $(".movie-duration").text((Math.floor(document.getElementsByTagName("video")[0].duration / 60)) + ":" + ("0" + Math.round(document.getElementsByTagName("video")[0].duration % 60)).slice(-2));
+      window.parent.postMessage({"movieLength": this.duration}, 'https://secure.nnn.ed.jp');
+      window.parent.postMessage('check', 'https://secure.nnn.ed.jp');
+    });
+    
+    $(window).on("message", function(e){
+      if(e.originalEvent.data === "already_done"){
+        toast("前回見た動画");
+      }else if(e.originalEvent.data === "not_done"){
+        toast("初視聴動画");
+      }else if(e.originalEvent.data === "movie_stopped"){
+        toast("自動進行停止");
+      };
+    });
     
     function toast(message){
       $(".movie-toast > span").text(message);
       $(".movie-toast").addClass("visible");
+      if(controllerVisible){$(".movie-toast").addClass("dodge")};
       window.clearTimeout(toastShow);
       toastShow = setTimeout(function(){
         $(".movie-toast").removeClass("visible");
+        $(".movie-toast").removeClass("dodge");
       }, 2000);
     };
     
   };
+  
 });
