@@ -10,7 +10,7 @@ $(function(){
         movieDuration = 0;
     
     $("head").find("title").remove();
-    $("head").append('<title>' + $("#breadcrumbs > ul > li").eq(3).text() + '</title>');
+    $("head").append('<title>' + $("#breadcrumbs > ul > li").eq(2).text() + '</title>');
     
     $(window).on("message", function(e){
       
@@ -38,6 +38,8 @@ $(function(){
         },movieDuration * 1000);
       }else if(typeof e.originalEvent.data === "boolean"){
         automator = e.originalEvent.data;
+      }else if(e.originalEvent.data === "reading_error"){
+        new Notification("Improve'N", {body: "未完了リストの読み取りに失敗しました ネットワーク状況を確認してください", icon: chrome.extension.getURL("image/favicon.png")}).show();
       };
 
     });
@@ -62,9 +64,9 @@ $(function(){
           {"status": "中間", "volume": 0.5, "icon": "volume_down"},
           {"status": "最小", "volume": 0.2, "icon": "volume_mute"}
         ],
+        volumeIndex = 1,
         unFinishedTitle = [],
         unFinishedURL = [],
-        volumeIndex = 1,
         controllerVisible = false,
         automated = true,
         toastShow,
@@ -91,17 +93,21 @@ $(function(){
             $(".undone-list-container").append('<p class="undone-list"><a target="_blank" href="' + unFinishedURL[i] + '">' + unFinishedTitle[i] + '</a></p><hr />');
           };
         }, error:function(e) {
-          console.log(e);
+          window.parent.postMessage('reading_error', 'https://secure.nnn.ed.jp');
         }
       });
       
       window.parent.postMessage('check', 'https://secure.nnn.ed.jp');
       
     });
+    
+    //  setting of movie downloader
 
     $(".movie-download-link").attr({
       "title": "Download", "download": "Classroom.mp4", "href": document.getElementsByTagName("source")[0].src
     });
+    
+    //  click detection & functions for each buttons
 
     $(".control").click(function(){
       $(".controller").toggleClass("visible");
@@ -177,6 +183,11 @@ $(function(){
       $(".icon-automate").toggleClass("inactive");
       automated = !automated;
       window.parent.postMessage(automated, 'https://secure.nnn.ed.jp');
+      if(automated){
+        toast("自動化を解除");
+      }else{
+        toast("自動化を始動");
+      }
     });
 
     $(".fullscreen").click(function(){
@@ -198,10 +209,14 @@ $(function(){
       document.getElementsByTagName("video")[0].play();
     });
     
+    //  time update for progress bar
+    
     $("#video01").on("timeupdate", function(){
       $(".progress-bar").css("width", this.currentTime / this.duration * 100 + "%");
       $(".movie-time").text(Math.floor(this.currentTime / 60) + ":" + ("0" + Math.round(this.currentTime % 60)).slice(-2));
     });
+    
+    // checking movie duration 
     
     $("#video01").on("canplaythrough", function(){
       $(this).removeAttr("controls");
