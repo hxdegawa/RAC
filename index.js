@@ -137,6 +137,7 @@ $(function(){
 
     $(".swich-left").click(function(){
       document.getElementsByTagName("video")[0].currentTime -= 10;
+      document.getElementsByTagName("video")[0].play();
       toast("10秒巻き戻します。");
     });
 
@@ -184,9 +185,9 @@ $(function(){
       automated = !automated;
       window.parent.postMessage(automated, 'https://secure.nnn.ed.jp');
       if(automated){
-        toast("自動化を解除");
-      }else{
         toast("自動化を始動");
+      }else{
+        toast("自動化を解除");
       }
     });
 
