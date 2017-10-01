@@ -26,17 +26,26 @@ $(function(){
           if(automator){
             if($("#nextMovie").length){
               $("#nextMovie").click();
+              new Notification("Improve'N", {body: "次の動画に移動します", icon: chrome.extension.getURL("image/favicon.png")}).show();
             }else if($("#nextTest").length){
               $("#nextTest").click();
+              new Notification("Improve'N", {body: "確認テストに移動します", icon: chrome.extension.getURL("image/favicon.png")}).show();
             };
           }else{
             $('.tokyo_thumbnail').get(0).contentWindow.postMessage('movie_stopped', 'https://ww3.tokyo-shoseki.co.jp');
+            new Notification("Improve'N", {body: "自動再生が停止されました", icon: chrome.extension.getURL("image/favicon.png")}).show();
           };
         },movieDuration * 1000);
       }else if(typeof e.originalEvent.data === "boolean"){
         automator = e.originalEvent.data;
       };
 
+    });
+    
+    $(function(){
+      if(Notification.permission === 'default'){
+        Notification.requestPermission();
+      };
     });
     
   };
@@ -85,6 +94,8 @@ $(function(){
           console.log(e);
         }
       });
+      
+      window.parent.postMessage('check', 'https://secure.nnn.ed.jp');
       
     });
 
@@ -193,14 +204,14 @@ $(function(){
     });
     
     $("#video01").on("canplaythrough", function(){
-      $(this).removeAttr("controls"); $(".movie-duration").text((Math.floor(document.getElementsByTagName("video")[0].duration / 60)) + ":" + ("0" + Math.round(document.getElementsByTagName("video")[0].duration % 60)).slice(-2));
+      $(this).removeAttr("controls");
+      $(".movie-duration").text((Math.floor(document.getElementsByTagName("video")[0].duration / 60)) + ":" + ("0" + Math.round(document.getElementsByTagName("video")[0].duration % 60)).slice(-2));
       window.parent.postMessage({"movieLength": this.duration}, 'https://secure.nnn.ed.jp');
-      window.parent.postMessage('check', 'https://secure.nnn.ed.jp');
     });
     
     $(window).on("message", function(e){
       if(e.originalEvent.data === "already_done"){
-        toast("前回見た動画");
+        toast("復習動画");
       }else if(e.originalEvent.data === "not_done"){
         toast("初視聴動画");
       }else if(e.originalEvent.data === "movie_stopped"){
