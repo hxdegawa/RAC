@@ -197,6 +197,9 @@ $(function(){
     
     $(".check-list").click(function(){
       $(".undone-list-container").toggleClass("visible");
+      controllerVisible = false;
+      $(".controller").removeClass("first-exhibition");
+      $(".controller").removeClass("visible");
       toast("未完了リストを表示");
     });
 
