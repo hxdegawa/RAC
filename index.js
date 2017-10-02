@@ -1,19 +1,19 @@
 $(function(){
-  
+
   if(location.href.indexOf('https://secure.nnn.ed.jp/') != -1){
     $("head").append('<link type="image/x-icon" rel="shortcut icon" href="' + chrome.extension.getURL("image/favicon.png") + '" />');
   };
-  
+
   if(location.href.indexOf('https://secure.nnn.ed.jp/mypage/report/pc/movie/view?') != -1){
-    
+
     let automator = true,
         movieDuration = 0;
-    
+
     $("head").find("title").remove();
-    $("head").append('<title>' + $("#breadcrumbs > ul > li").eq(2).text() + '</title>');
-    
+    $("head").append('<title>' + $("#breadcrumbs > ul > li").eq(3).text() + '</title>');
+
     $(window).on("message", function(e){
-      
+
       if(e.originalEvent.data === "check"){
         if(typeof $("#nextMovie").attr("disabled") === "string"){
           $('.tokyo_thumbnail').get(0).contentWindow.postMessage('not_done', 'https://ww3.tokyo-shoseki.co.jp');
@@ -38,22 +38,20 @@ $(function(){
         },movieDuration * 1000);
       }else if(typeof e.originalEvent.data === "boolean"){
         automator = e.originalEvent.data;
-      }else if(e.originalEvent.data === "reading_error"){
-        new Notification("Improve'N", {body: "未完了リストの読み取りに失敗しました ネットワーク状況を確認してください", icon: chrome.extension.getURL("image/favicon.png")}).show();
       };
 
     });
-    
+
     $(function(){
       if(Notification.permission === 'default'){
         Notification.requestPermission();
       };
     });
-    
+
   };
-  
+
   if(location.href.indexOf('https://ww3.tokyo-shoseki.co.jp/api/dwango/requestContents.php?') != -1){
-  
+
     let control = {
     fastForward: false,
      fastRewind: false,
@@ -64,13 +62,15 @@ $(function(){
           {"status": "中間", "volume": 0.5, "icon": "volume_down"},
           {"status": "最小", "volume": 0.2, "icon": "volume_mute"}
         ],
-        volumeIndex = 1,
         unFinishedTitle = [],
         unFinishedURL = [],
+        volumeIndex = 1,
         controllerVisible = false,
         automated = true,
         toastShow,
-        exhibition;
+        exhibition,
+        keyCode,
+        keyName;
 
     $("body").append('<div class="movie-toast"><span></span></div><div id="movie-controller"></div><div class="undone-list-container"><h1>未完了レポート</h1><div class="undone-list-container-close"><i class="material-icons">close</i></div></div>');
     $("body").prepend('<div class="controller"><div class="controller-inner-container"><div class="progress-bar-container"><div class="progress-bar"></div></div><p><span class="movie-time"></span><span> / </span><span class="movie-duration"></span></p><div class="mute"><i class="material-icons icon-mute">volume_up</i></div></div></div>');
@@ -78,7 +78,7 @@ $(function(){
     $("#movie-controller").append('<div class="swich-controller swich-left"><i class="material-icons">chevron_left</i></div><div class="swich-controller control"><i class="material-icons">videogame_asset</i></div><div class="swich-controller master"><i class="material-icons">settings</i></div><div class="swich-controller volume"><i class="material-icons volume-icon">volume_up</i></div><div class="swich-controller swich-right"><i class="material-icons">chevron_right</i></div><br /><div class="swich-controller col5 rate-left"><i class="material-icons">fast_rewind</i></div><div class="swich-controller col5 automate"><i class="material-icons icon-automate">explore</i></div><div class="swich-controller col5 fullscreen"><i class="material-icons">fullscreen</i></div><div class="swich-controller col5 check-list"><i class="material-icons">list</i></div><a class="movie-download-link" target="_blank"><div class="swich-controller col5 download"><i class="material-icons">file_download</i></div></a><div class="swich-controller col5 rate-right"><i class="material-icons">fast_forward</i></div>');
 
     //  create list of undone report
-  
+
     $(function(){
 
       $.ajax({
@@ -93,21 +93,17 @@ $(function(){
             $(".undone-list-container").append('<p class="undone-list"><a target="_blank" href="' + unFinishedURL[i] + '">' + unFinishedTitle[i] + '</a></p><hr />');
           };
         }, error:function(e) {
-          window.parent.postMessage('reading_error', 'https://secure.nnn.ed.jp');
+          console.log(e);
         }
       });
-      
+
       window.parent.postMessage('check', 'https://secure.nnn.ed.jp');
-      
+
     });
-    
-    //  setting of movie downloader
 
     $(".movie-download-link").attr({
       "title": "Download", "download": "Classroom.mp4", "href": document.getElementsByTagName("source")[0].src
     });
-    
-    //  click detection & functions for each buttons
 
     $(".control").click(function(){
       $(".controller").toggleClass("visible");
@@ -118,7 +114,7 @@ $(function(){
         exhibition = setTimeout(function(){$(".controller").removeClass("first-exhibition")},1500);
       }
     });
-    
+
     $(".volume").click(function(){
         document.getElementsByTagName("video")[0].volume = volumeStatus[volumeIndex].volume;
         toast("音量を" + volumeStatus[volumeIndex].status + "に設定");
@@ -129,7 +125,7 @@ $(function(){
         volumeIndex = 0;
       };
     });
-    
+
     $(".swich-right").click(function(){
       document.getElementsByTagName("video")[0].currentTime += 10;
       toast("10秒先送り");
@@ -137,7 +133,6 @@ $(function(){
 
     $(".swich-left").click(function(){
       document.getElementsByTagName("video")[0].currentTime -= 10;
-      document.getElementsByTagName("video")[0].play();
       toast("10秒巻き戻します。");
     });
 
@@ -179,55 +174,43 @@ $(function(){
       };
       toast("音声をミュート");
     });
-    
+
     $(".automate").click(function(){
       $(".icon-automate").toggleClass("inactive");
       automated = !automated;
       window.parent.postMessage(automated, 'https://secure.nnn.ed.jp');
-      if(automated){
-        toast("自動化を始動");
-      }else{
-        toast("自動化を解除");
-      }
     });
 
     $(".fullscreen").click(function(){
       document.getElementsByTagName("video")[0].webkitRequestFullscreen();
     });
-    
+
     $(".check-list").click(function(){
       $(".undone-list-container").toggleClass("visible");
-      controllerVisible = false;
-      $(".controller").removeClass("first-exhibition");
-      $(".controller").removeClass("visible");
       toast("未完了リストを表示");
     });
 
     $(".undone-list-container-close").click(function(){
       $(".undone-list-container").removeClass("visible");
     });
-    
+
     $(".progress-bar-container").click(function(e){
       $(".progress-bar").css("width", e.offsetX / 585 * 100 + "%");
       document.getElementsByTagName("video")[0].currentTime = document.getElementsByTagName("video")[0].duration * e.offsetX / 585;
       document.getElementsByTagName("video")[0].play();
     });
-    
-    //  time update for progress bar
-    
+
     $("#video01").on("timeupdate", function(){
       $(".progress-bar").css("width", this.currentTime / this.duration * 100 + "%");
       $(".movie-time").text(Math.floor(this.currentTime / 60) + ":" + ("0" + Math.round(this.currentTime % 60)).slice(-2));
     });
-    
-    // checking movie duration 
-    
+
     $("#video01").on("canplaythrough", function(){
       $(this).removeAttr("controls");
       $(".movie-duration").text((Math.floor(document.getElementsByTagName("video")[0].duration / 60)) + ":" + ("0" + Math.round(document.getElementsByTagName("video")[0].duration % 60)).slice(-2));
       window.parent.postMessage({"movieLength": this.duration}, 'https://secure.nnn.ed.jp');
     });
-    
+
     $(window).on("message", function(e){
       if(e.originalEvent.data === "already_done"){
         toast("復習動画");
@@ -237,7 +220,7 @@ $(function(){
         toast("自動進行停止");
       };
     });
-    
+
     function toast(message){
       $(".movie-toast > span").text(message);
       $(".movie-toast").addClass("visible");
@@ -248,7 +231,51 @@ $(function(){
         $(".movie-toast").removeClass("dodge");
       }, 2000);
     };
-    
+
+    $(window).keyup(function(keyEvt){
+      keyCode = keyEvt.which;
+      keyName = String.fromCharCode(keyCode);
+      switch(keyName){
+        case "F":
+          $(".swich-controller.col5.fullscreen").click();
+        break;
+        case "S":
+          $(".swich-controller.swich-right").click();
+        break;
+        case "B":
+          $(".swich-controller.swich-left").click();
+        break;
+        case "D":
+          $(".swich-controller.col5.download").click();
+        break;
+        case "L":
+          $(".swich-controller.col5.check-list").click();
+        break;
+        case "V":
+          $(".swich-controller.volume").click();
+        break;
+        case "C":
+          $(".swich-controller.control").click();
+        break;
+        case "A":
+          $(".swich-controller.col5.automate").click();
+        break;
+        case "5":
+          $(".swich-controller.col5.rate-right").click();
+        break;
+        case "2":
+          $(".swich-controller.col5.rate-left").click();
+        break;
+        case "M":
+          $(".mute").click();
+        break;
+        case " ":
+        case "　":
+
+        break;
+      }
+    });
+
   };
-  
+
 });
