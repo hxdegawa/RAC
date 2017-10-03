@@ -1,3 +1,7 @@
+*{
+  font-family: "HiraginoSans";
+}
+
 body{
   margin: 0px !important;
 }
@@ -10,6 +14,8 @@ video{
 iframe{
   overflow: hidden;
 }
+
+/*Tokyo-shoseki*/
 
 #movie-controller{
   position: absolute;
@@ -65,7 +71,7 @@ iframe{
   margin: 10px 12px 10px 12px;
 }
 
-.undone-list-container{
+.movie-cover{
   z-index: 5;
   position: absolute;
   transition: 0.3s ease;
@@ -79,12 +85,12 @@ iframe{
   overflow: scroll;
 }
 
-.undone-list-container.visible{
+.movie-cover.visible{
   opacity: 1;
   pointer-events: all;
 }
 
-.undone-list-container h1{
+.movie-cover h1{
   box-sizing: border-box;
   font-size: 1.6em;
   font-weight: 100;
@@ -110,7 +116,7 @@ iframe{
   text-shadow: 0px 0px 3px orange;
 }
 
-.undone-list-container-close{
+.undone-list-container-close, .hint-list-container-close{
   position: fixed;
   right: 10px;
   top: 10px;
@@ -249,4 +255,69 @@ iframe{
 .mute i{
   vertical-align: top;
   line-height: 25px; 
+}
+
+/*nnn.ed.jp*/
+
+input[type="button"]{
+  border-radius: 0px !important;
+  font-family: "HiraginoSans" !important;
+  font-weight: 100 !important;
+}
+.button-left, .button-center, .button-right{
+  transition: 0.1s ease;
+  transform: scale(1.0, 1.0);  
+}
+
+.button-left:hover, .button-center:hover, .button-right:hover{
+  transform: scale(1.05, 1.05);
+}
+
+input[type="button"].impracticable{
+  background-color: #424242;
+  cursor: default;
+}
+
+input[type="button"].practicable{
+  background-color: #212121;
+}
+
+#movie > h1{
+  display: inline-block;
+}
+
+.container-items{
+  float: right;
+  height: 27px;
+  width: 27px;
+  margin: 10px 0px 10px 10px;
+  transition: 0.2s ease;
+  background-color: transparent;
+  cursor: pointer;
+  user-select: none;
+  text-align: center;
+}
+
+.container-items i{
+  line-height: 27px;
+}
+
+.container-items:hover{
+  background-color: lightgray;
+}
+
+.clipboard-input{
+  height: 0px;
+  width: 0px;
+  margin: 0px;
+  padding: 0px;
+  opacity: 0;
+}
+
+#chapterProgress > h1{
+  display: inline-block;
+}
+
+#chapterProgress table.onBoard{
+  display: none;
 }
