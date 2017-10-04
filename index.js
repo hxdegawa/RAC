@@ -10,7 +10,6 @@ $(function(){
         isFlighted = false,
         movieDuration = 0;
     
-    
     $("head").find("title").remove();
     $("head").append('<title>' + $("#breadcrumbs > ul > li").eq(2).text() + '</title>');
     $("head").prepend('<style>@font-face{font-family: "HiraginoSan s";src: url("' + chrome.extension.getURL("font/hiragino_sans.ttc") + '");}</style><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />');
@@ -29,8 +28,6 @@ $(function(){
         Notification.requestPermission();
       };
       
-//      TWITTER GET FUNCTION HERE
-      
     });
     
     $(".clipboard").click(function(){
@@ -47,10 +44,15 @@ $(function(){
     $(".flight").click(function(){
       isFlighted = !isFlighted;
       $("#chapterProgress > table").toggleClass("onBoard");
+      
+      
       if(isFlighted){
         $(".flight > i").eq(0).text("flight_land");
       }else{
         $(".flight > i").eq(0).text("flight_takeoff");
+        
+//        CHAT UI COMES HERE
+        
       };
     });
     

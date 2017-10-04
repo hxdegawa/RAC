@@ -1,0 +1,22 @@
+{
+  "name": "rac",
+  "version": "1.0.0",
+  "description": "# RAC - Report Active Controller",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hxdegawa/RAC.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hxdegawa/RAC/issues"
+  },
+  "homepage": "https://github.com/hxdegawa/RAC#readme",
+  "dependencies": {
+    "sha1": "^1.1.1"
+  }
+}
