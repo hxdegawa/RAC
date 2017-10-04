@@ -13,7 +13,7 @@ $(function(){
     $("head").find("title").remove();
     $("head").append('<title>' + $("#breadcrumbs > ul > li").eq(2).text() + '</title>');
     $("head").prepend('<style>@font-face{font-family: "HiraginoSan s";src: url("' + chrome.extension.getURL("font/hiragino_sans.ttc") + '");}</style><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />');
-    $("#movie > h1").after('<div class="hint container-items"><i class="material-icons">help_outline</i></div><div class="clipboard container-items"><i class="material-icons">link</i></div><textarea class="clipboard-input" />');
+    $("#movie > h1").after('<div class="info container-items"><i class="material-icons">info_outline</i></div><div class="clipboard container-items"><i class="material-icons">link</i></div><textarea class="clipboard-input" />');
     $("#chapterProgress > h1").after('<div class="flight container-items"><i class="material-icons">flight_takeoff</i></div>');
     
     $("#movie_view_").val("前の動画");
@@ -37,7 +37,7 @@ $(function(){
       $('.tokyo_thumbnail').get(0).contentWindow.postMessage({"toast": "URLをコピー"}, 'https://ww3.tokyo-shoseki.co.jp');
     });
     
-    $(".hint").click(function(){
+    $(".info").click(function(){
       $('.tokyo_thumbnail').get(0).contentWindow.postMessage($(".section > p").eq(1).text().replace(/\n/g, "").replace(/"/g, "").replace(/，/g, "、").split("・").splice(1, $(".section > p").eq(1).text().split("・").length), 'https://ww3.tokyo-shoseki.co.jp');
     });
     
@@ -110,7 +110,7 @@ $(function(){
         toastShow,
         exhibition;
 
-    $("body").append('<div class="movie-toast"><span></span></div><div id="movie-controller"></div><div class="undone-list-container movie-cover"><h1>未完了レポート</h1><div class="undone-list-container-close"><i class="material-icons">close</i></div></div><div class="hint-list-container movie-cover"><h1>目的</h1><div class="hint-list-container-close"><i class="material-icons">close</i></div></div>');
+    $("body").append('<div class="movie-toast"><span></span></div><div id="movie-controller"></div><div class="undone-list-container movie-cover"><h1>未完了レポート</h1><div class="undone-list-container-close"><i class="material-icons">close</i></div></div><div class="info-list-container movie-cover"><h1>単元目的</h1><div class="info-list-container-close"><i class="material-icons">close</i></div></div>');
     $("body").prepend('<div class="controller"><div class="controller-inner-container"><div class="progress-bar-container"><div class="progress-bar"></div></div><p><span class="movie-time"></span><span> / </span><span class="movie-duration"></span></p><div class="mute"><i class="material-icons icon-mute">volume_up</i></div></div></div>');
     $("head").prepend('<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />');
     $("#movie-controller").append('<div class="swich-controller swich-left"><i class="material-icons">chevron_left</i></div><div class="swich-controller control"><i class="material-icons">videogame_asset</i></div><div class="swich-controller master"><i class="material-icons">settings</i></div><div class="swich-controller volume"><i class="material-icons volume-icon">volume_up</i></div><div class="swich-controller swich-right"><i class="material-icons">chevron_right</i></div><br /><div class="swich-controller col5 rate-left"><i class="material-icons">fast_rewind</i></div><div class="swich-controller col5 automate"><i class="material-icons icon-automate">explore</i></div><div class="swich-controller col5 fullscreen"><i class="material-icons">fullscreen</i></div><div class="swich-controller col5 check-list"><i class="material-icons">list</i></div><a class="movie-download-link" target="_blank"><div class="swich-controller col5 download"><i class="material-icons">file_download</i></div></a><div class="swich-controller col5 rate-right"><i class="material-icons">fast_forward</i></div>');
@@ -234,7 +234,7 @@ $(function(){
     });
     
     $(".check-list").click(function(){
-      $(".hint-list-container").removeClass("visible");
+      $(".info-list-container").removeClass("visible");
       $(".undone-list-container").toggleClass("visible");
       controllerVisible = false;
       $(".controller").removeClass("first-exhibition");
@@ -246,8 +246,8 @@ $(function(){
       $(".undone-list-container").removeClass("visible");
     });
     
-    $(".hint-list-container-close").click(function(){
-      $(".hint-list-container").removeClass("visible");
+    $(".info-list-container-close").click(function(){
+      $(".info-list-container").removeClass("visible");
     });
     
     $(".progress-bar-container").click(function(e){
@@ -281,13 +281,20 @@ $(function(){
       }else if(typeof e.originalEvent.data === "object" && e.originalEvent.data.toast){
         toast(e.originalEvent.data.toast);
       }else if(typeof e.originalEvent.data === "object"){
-        if($(".hint-list-container").find("p").length < 1){
-          for(var i = 0; i < e.originalEvent.data.length; i++){
-            $(".hint-list-container").append('<p>' + e.originalEvent.data[i] + '</p><hr />');
-          };
-        };
+        if(e.originalEvent.data.length > 0){
+          if($(".info-list-container").find("p").length < 1){
+            for(var i = 0; i < e.originalEvent.data.length; i++){
+              $(".info-list-container").append('<p>' + e.originalEvent.data[i] + '</p><hr />');
+            }
+          }
+        }else{
+          if($(".info-list-container").find("h2").length < 1){
+            $(".info-list-container").append('<h2 class="no-list-available">この単元に目標は設定されていません。</h2>'); 
+          }
+        }
+        
         $(".undone-list-container").removeClass("visible");
-        $(".hint-list-container").toggleClass("visible");
+        $(".info-list-container").toggleClass("visible");
         controllerVisible = false;
         $(".controller").removeClass("first-exhibition");
         $(".controller").removeClass("visible");
