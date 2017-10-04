@@ -352,9 +352,8 @@ $(function(){
         case "M":
           $(".mute").click();
         break;
-        case " ":
-        case "　":
-
+        case " " || "　":
+          // stoping the movie func by space key
         break;
       }
     });
