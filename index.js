@@ -82,10 +82,14 @@ $(function(){
         },movieDuration * 1000);
       }else if(typeof e.originalEvent.data === "boolean"){
         automator = e.originalEvent.data;
-      }else if(e.originalEvent.data === "reading_error"){
-        new Notification("Improve'N", {body: "未完了リストの読み取りに失敗しました ネットワーク状況を確認してください", icon: chrome.extension.getURL("image/favicon.png")}).show();
       };
 
+    });
+
+    $(function(){
+      if(Notification.permission === 'default'){
+        Notification.requestPermission();
+      };
     });
 
   };
@@ -102,13 +106,15 @@ $(function(){
           {"status": "中間", "volume": 0.5, "icon": "volume_down"},
           {"status": "最小", "volume": 0.2, "icon": "volume_mute"}
         ],
-        volumeIndex = 1,
         unFinishedTitle = [],
         unFinishedURL = [],
+        volumeIndex = 1,
         controllerVisible = false,
         automated = true,
         toastShow,
-        exhibition;
+        exhibition,
+        keyCode,
+        keyName;
 
     $("body").append('<div class="movie-toast"><span></span></div><div id="movie-controller"></div><div class="undone-list-container movie-cover"><h1>未完了レポート</h1><div class="undone-list-container-close"><i class="material-icons">close</i></div></div><div class="info-list-container movie-cover"><h1>単元目的</h1><div class="info-list-container-close"><i class="material-icons">close</i></div></div>');
     $("body").prepend('<div class="controller"><div class="controller-inner-container"><div class="progress-bar-container"><div class="progress-bar"></div></div><p><span class="movie-time"></span><span> / </span><span class="movie-duration"></span></p><div class="mute"><i class="material-icons icon-mute">volume_up</i></div></div></div>');
@@ -131,7 +137,7 @@ $(function(){
             $(".undone-list-container").append('<p class="undone-list"><a target="_blank" href="' + unFinishedURL[i] + '">' + unFinishedTitle[i] + '</a></p><hr />');
           };
         }, error:function(e) {
-          window.parent.postMessage('reading_error', 'https://secure.nnn.ed.jp');
+          console.log(e);
         }
       });
 
@@ -175,7 +181,6 @@ $(function(){
 
     $(".swich-left").click(function(){
       document.getElementsByTagName("video")[0].currentTime -= 10;
-      document.getElementsByTagName("video")[0].play();
       toast("10秒巻き戻します。");
     });
 
@@ -236,9 +241,6 @@ $(function(){
     $(".check-list").click(function(){
       $(".info-list-container").removeClass("visible");
       $(".undone-list-container").toggleClass("visible");
-      controllerVisible = false;
-      $(".controller").removeClass("first-exhibition");
-      $(".controller").removeClass("visible");
       toast("未完了リストを表示");
     });
 
@@ -312,6 +314,50 @@ $(function(){
         $(".movie-toast").removeClass("dodge");
       }, 2000);
     };
+
+    $(window).keyup(function(keyEvt){
+      keyCode = keyEvt.which;
+      keyName = String.fromCharCode(keyCode);
+      switch(keyName){
+        case "F":
+          $(".swich-controller.col5.fullscreen").click();
+        break;
+        case "S":
+          $(".swich-controller.swich-right").click();
+        break;
+        case "B":
+          $(".swich-controller.swich-left").click();
+        break;
+        case "D":
+          $(".swich-controller.col5.download").click();
+        break;
+        case "L":
+          $(".swich-controller.col5.check-list").click();
+        break;
+        case "V":
+          $(".swich-controller.volume").click();
+        break;
+        case "C":
+          $(".swich-controller.control").click();
+        break;
+        case "A":
+          $(".swich-controller.col5.automate").click();
+        break;
+        case "5":
+          $(".swich-controller.col5.rate-right").click();
+        break;
+        case "2":
+          $(".swich-controller.col5.rate-left").click();
+        break;
+        case "M":
+          $(".mute").click();
+        break;
+        case " ":
+        case "　":
+
+        break;
+      }
+    });
 
   };
 
