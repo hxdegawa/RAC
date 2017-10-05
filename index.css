@@ -326,3 +326,14 @@ input[type="button"].practicable{
   font-weight: 100;
   text-align: center;
 }
+
+.chat-frame{
+  width: 100%;
+  height: 550px;
+  border: none;
+  display: none;
+}
+
+.chat-frame.onBoard{
+  display: block;
+}

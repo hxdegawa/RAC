@@ -1,0 +1,109 @@
+:root{
+  --mainColor: #878ECD;
+  --subColor: #B9BBDF;
+
+  --lightMainColor: #DFF4F3;
+  --lightSubColor: #DDE7F2;
+}
+
+*{
+  font-family: "Noto Sans Japanese";
+  font-weight: 100;
+  -webkit-font-smoothing: antialiased;
+}
+
+body{
+  margin: 0px;
+}
+
+.landing-view{
+  position: relative;
+  height: calc(100vh + 64px);
+  width: 100%;
+  background-color: var(--mainColor);
+}
+
+.landing-view h1{
+  position: absolute;
+  font-size: 3.6em;
+  color: #ffffff;
+  left: 50%;
+  top: 35%;
+  transform: translate(-50%, -100%);
+}
+
+.btn-start{
+  position: absolute;
+  height: 80px;
+  width: 160px;
+  line-height: 80px;
+  cursor: pointer;
+  font-size: 2em;
+  vertical-align: top;
+  color: #ffffff;
+  left: 50%;
+  top: 75%;
+  border: solid 1px;
+  text-align: center;
+  transition: 0.4s ease;
+  transform: translate(-50%, -100%);
+  overflow: hidden;
+}
+
+.btn-start span{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transition: inherit;
+  transform: translate(-50%, -50%);
+}
+
+.btn-start:hover span{
+  left: -50%;
+}
+
+.btn-start:before{
+  content: "keyboard_arrow_right";
+  font-family: 'Material Icons';
+  transition: inherit;
+  font-size: 2em;
+  position: absolute;
+  left: 100%;
+  text-align: center;
+  width: 160px;
+  height: 80px;
+}
+
+.btn-start:hover:before{
+  left: 0%;
+}
+
+.header{
+  position: absolute;
+  bottom: 0px;
+  height: 64px;
+  width: 100%;
+}
+
+.header ul{
+  height: 64px;
+  padding: 0px;
+  margin: 0px;
+}
+
+.header ul li{
+  padding: 0px;
+  margin: 0px;
+  line-height: 64px;
+}
+
+.logo-image{
+  height: 100%;
+  object-fit: contain;
+}
+
+.desc-container{
+  position: relative;
+  height: calc(100vh - 64px);
+  width: 100%;
+}

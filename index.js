@@ -13,8 +13,9 @@ $(function(){
     $("head").find("title").remove();
     $("head").append('<title>' + $("#breadcrumbs > ul > li").eq(2).text() + '</title>');
     $("head").prepend('<style>@font-face{font-family: "HiraginoSan s";src: url("' + chrome.extension.getURL("font/hiragino_sans.ttc") + '");}</style><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />');
-    $("#movie > h1").after('<div class="info container-items"><i class="material-icons">info_outline</i></div><div class="clipboard container-items"><i class="material-icons">link</i></div><textarea class="clipboard-input" />');
+    $("#movie > h1").after('<div class="help container-items"><i class="material-icons">help_outline</i></div><div class="info container-items"><i class="material-icons">info_outline</i></div><div class="clipboard container-items"><i class="material-icons">link</i></div><textarea class="clipboard-input" />');
     $("#chapterProgress > h1").after('<div class="flight container-items"><i class="material-icons">flight_takeoff</i></div>');
+    $("#chapterProgress > table").after('<iframe class="chat-frame" src="http://degawa.com/hd/chat/#-Kv_ftpLievCpjp0k-pE"></iframe>');
 
     $("#movie_view_").val("前の動画");
     $("#nextMovie").val("次の動画");
@@ -40,18 +41,20 @@ $(function(){
     $(".info").click(function(){
       $('.tokyo_thumbnail').get(0).contentWindow.postMessage($(".section > p").eq(1).text().replace(/\n/g, "").replace(/"/g, "").replace(/，/g, "、").split("・").splice(1, $(".section > p").eq(1).text().split("・").length), 'https://ww3.tokyo-shoseki.co.jp');
     });
+    
+    $(".help").click(function(){
+      
+    });
 
     $(".flight").click(function(){
       isFlighted = !isFlighted;
       $("#chapterProgress > table").toggleClass("onBoard");
-
+      $(".chat-frame").toggleClass("onBoard");
 
       if(isFlighted){
         $(".flight > i").eq(0).text("flight_land");
       }else{
         $(".flight > i").eq(0).text("flight_takeoff");
-
-        //        CHAT UI COMES HERE
 
       };
     });
