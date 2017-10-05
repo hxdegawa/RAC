@@ -6,14 +6,14 @@
     <defs></defs>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="Artboard" fill="#FFFFFF">
-            <g id="N-Highschool-border" transform="translate(23.000000, 15.000000)">
-                <polygon id="Rectangle" points="0 50.7473685 6.20408166 70 16 39"></polygon>
-                <polygon id="Rectangle-Copy-2" points="23 99 45 99 27.2580645 46"></polygon>
-                <polygon id="Rectangle-Copy-3" points="44.733945 88 66 88 28 36"></polygon>
-                <polygon id="Rectangle-Copy-4" transform="translate(36.000000, 33.000000) rotate(-180.000000) translate(-36.000000, -33.000000) " points="37.7272726 66 55 53.361702 17 0"></polygon>
-                <polygon id="Rectangle-Copy-5" transform="translate(54.000000, 42.000000) rotate(-180.000000) translate(-54.000000, -42.000000) " points="47.6065575 61.3957221 64 73 44 11"></polygon>
-                <polygon id="Rectangle-Copy-6" transform="translate(73.500000, 54.000000) rotate(-180.000000) translate(-73.500000, -54.000000) " points="65 67.3421054 82 80 78.1836734 28"></polygon>
-                <polygon id="Rectangle-Copy" points="13 69.3311258 18.516129 87 22 41"></polygon>
+            <g id="N-Highschool-border" transform="translate(31.000000, 25.000000)">
+                <polygon id="Rectangle" points="0 40.0947369 5.04081635 55 13 31"></polygon>
+                <polygon id="Rectangle-Copy-2" points="19 78 37 78 22.483871 36"></polygon>
+                <polygon id="Rectangle-Copy-3" points="36.6513762 69 54 69 23 28"></polygon>
+                <polygon id="Rectangle-Copy-4" transform="translate(29.500000, 26.000000) rotate(-180.000000) translate(-29.500000, -26.000000) " points="30.9090908 52 45 42.0425531 14 0"></polygon>
+                <polygon id="Rectangle-Copy-5" transform="translate(43.000000, 33.500000) rotate(-180.000000) translate(-43.000000, -33.500000) " points="37.885246 48.8288771 51 58 35 9"></polygon>
+                <polygon id="Rectangle-Copy-6" transform="translate(59.000000, 42.500000) rotate(-180.000000) translate(-59.000000, -42.500000) " points="52 53.0197369 66 63 62.8571428 22"></polygon>
+                <polygon id="Rectangle-Copy" points="10 54.1721854 14.2903226 68 17 32"></polygon>
             </g>
         </g>
     </g>

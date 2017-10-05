@@ -54,6 +54,7 @@ body{
   position: absolute;
   left: 50%;
   top: 50%;
+  letter-spacing: 3px;
   transition: inherit;
   transform: translate(-50%, -50%);
 }
@@ -86,6 +87,10 @@ body{
 }
 
 .header ul{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 60%;
   height: 64px;
   padding: 0px;
   margin: 0px;
@@ -94,7 +99,16 @@ body{
 .header ul li{
   padding: 0px;
   margin: 0px;
+  transition: 0.4s ease;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 1.4em;
   line-height: 64px;
+  list-style: none;
+}
+
+.header ul li:hover{
+  text-shadow: 0px 0px 3px var(--lightMainColor);
 }
 
 .logo-image{
