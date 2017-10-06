@@ -70,9 +70,9 @@ $(function(){
   
   function mailSubmit(){
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://maker.ifttt.com/trigger/mail_submit/with/key/chZq40Tri-7F73obbMC_IK", false);
+    xhr.open("GET", "https://maker.ifttt.com/trigger/mail_submit/with/key/chZq40Tri-7F73obbMC_IK?value1="+$(".name").val()+"&value2="+$(".mail").val()+"&value3="+$(".opinion").val());
     xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.send(JSON.stringify({value1: $(".name")[0].value, value2: $(".mail")[0].value, value3: $(".opinion")[0].value}));
+    xhr.send();
   }
   
   function toast(string){

@@ -10,7 +10,7 @@
     "default_icon": "icon.png"
   },
   "options_page": "option/options.html",
-  "permissions" : ["tabs", "notifications"],
+  "permissions" : ["tabs", "notifications", "https://maker.ifttt.com/*"],
   "background": {
     "scripts": ["./jquery-3.2.1.min.js", "./background/background.js"]
   },
@@ -29,8 +29,5 @@
   "web_accessible_resources": [
     "image/favicon.png",
     "font/hiragino_sans.ttc"
-  ],
-  "permissions": [
-    "https://maker.ifttt.com/*"
   ]
 }

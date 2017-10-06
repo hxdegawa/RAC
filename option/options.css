@@ -406,8 +406,14 @@ main{
   transition: 0.4s ease;
 }
 
-.visible{
+.toast.visible{
   bottom: 0px;
+}
+
+/*PROPERTY*/
+
+.disabled{
+  
 }
 
 @media (min-width: 300px) and (max-width: 800px){
