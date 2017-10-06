@@ -145,6 +145,10 @@ main{
   width: 100%;
 }
 
+.desc-container.disabled{
+  overflow: hidden;
+}
+
 .desc-container.active{
   padding: 0px;
   overflow: hidden;
@@ -293,7 +297,28 @@ main{
 }
 
 .container-contact{
-  
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+
+.mail-form{
+  position: relative;
+  display: block;
+  width: 500px;
+  height: 600px;
+  margin: 8vh auto 0px auto;
+  text-align: center;
+  box-shadow: 2px 2px 3px lightgray;
+}
+
+.mail-form h2{
+  font-size: 1.9em;
+  line-height: 40px;
+  vertical-align: bottom;
 }
 
 @media (min-width: 300px) and (max-width: 800px){

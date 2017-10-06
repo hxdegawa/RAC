@@ -7,6 +7,7 @@ $(function(){
   $(window).scroll(function(){
     if($(this).scrollTop() >= $(window).height()){
       $(".landing-view").addClass("hide");
+      $(".desc-container").removeClass("disabled");
     };
   });
   
@@ -19,6 +20,7 @@ $(function(){
     console.log($(window).height());
     $("html,body").scrollTop($(window).height() - 1);
     $("html,body").animate({scrollTop: $("body").offset().top});
+    $(".desc-container").addClass("disabled");
   });
   
   $('li[class*="tab-"]').click(function(){
