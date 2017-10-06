@@ -11,7 +11,14 @@ $(function(){
   });
   
   $(".btn-start").click(function(){
-    $("html,body").animate({ scrollTop: $(".desc-container").offset().top - 64});
+    $("html,body").animate({scrollTop: $(".desc-container").offset().top - 64});
+  });
+  
+  $(".logo-image").click(function(){
+    $(".landing-view").removeClass("hide");
+    console.log($(window).height());
+    $("html,body").scrollTop($(window).height() - 1);
+    $("html,body").animate({scrollTop: $("body").offset().top});
   });
   
   $('li[class*="tab-"]').click(function(){
@@ -32,7 +39,7 @@ $(function(){
   });
   
   $(".tab-donation").click(function(){
-//    $(".container-donation").addClass("active");
+    $(".container-donation").addClass("active");
   });
   
   function checkWidth(){
