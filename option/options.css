@@ -4,6 +4,8 @@
 
   --lightMainColor: #DFF4F3;
   --lightSubColor: #DDE7F2;
+  
+  --successColor: #80D49C;
 }
 
 *{
@@ -328,6 +330,7 @@ main{
   display: inline-block;
   width: 40%;
   margin: 0px 5%;
+  opacity: 1;
 }
 
 .input-container-name{
@@ -355,6 +358,7 @@ main{
 .textarea-container{
   clear: both;
   margin-bottom: 30px;
+  opacity: 1;
 }
 
 .mail-form textarea{
@@ -379,6 +383,7 @@ main{
   margin: 0px auto;
   cursor: pointer;
   user-select: none;
+  opacity: 1;
   transition: 0.3s ease;
 }
 
@@ -388,6 +393,29 @@ main{
 
 .mail-form-submit:active{
   background-color: var(--lightSubColor);
+}
+
+[class*="form-submitted-icon"]{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 150px;
+  width: 150px;
+}
+
+.form-submitted-icon-border{
+  opacity: 1;
+  animation: dash 15s linear infinite;
+}
+
+.form-submitted-icon{
+  opacity: 0;
+  transition: ease 0.4s;
+}
+
+.form-submitted-icon.active{
+  opacity: 1;
 }
 
 /*TOAST*/
@@ -412,8 +440,11 @@ main{
 
 /*PROPERTY*/
 
-.disabled{
-  
+.submitted{
+  opacity: 0.2 !important;
+  pointer-events: none !important;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
 }
 
 @media (min-width: 300px) and (max-width: 800px){
@@ -430,5 +461,14 @@ main{
   
   .card-container{
     width: 350px;
+  }
+}
+
+@keyframes dash {
+  from {
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dashoffset: 0;
   }
 }

@@ -48,6 +48,9 @@ $(function(){
   
   $(".mail-form-submit").click(function(){
     if($(".name").val().length > 0 && $(".mail").val().length > 0 && $(".opinion").val().length > 0){
+      $(".mail-form").children().addClass("submitted");
+      $(".mail-form").append('<img class="form-submitted-icon-border" src="../image/check_border.svg" alt="" /><img class="form-submitted-icon" src="../image/check.svg" alt="" />');
+      setTimeout(function(){$(".form-submitted-icon").addClass("active")}, 1500);
       mailSubmit();
     }else{
       toast("please fill all");
