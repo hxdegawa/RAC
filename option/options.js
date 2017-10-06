@@ -44,6 +44,10 @@ $(function(){
     $(".container-donation").addClass("active");
   });
   
+  $(".mail-form-submit").click(function(){
+    mailSubmit();
+  });
+  
   function checkWidth(){
     if($(window).width() < 800){
       $(".following-step-1 p").eq(0).text("Prepare your computer.");
@@ -57,6 +61,13 @@ $(function(){
   function resetAllWindow(){
     $('div[class*="container-"], .desc-container').removeClass("active");
   };
+  
+  function mailSubmit(){
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "https://maker.ifttt.com/trigger/mail_submit/with/key/chZq40Tri-7F73obbMC_IK", false);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(JSON.stringify({value1: $(".name")[0].value, value2: $(".mail")[0].value, value3: $(".opinion")[0].value}));
+  }
   
   checkWidth();
   
