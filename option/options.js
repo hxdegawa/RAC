@@ -84,7 +84,7 @@ $(function(){
   
   function mailSubmit(){
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "https://maker.ifttt.com/trigger/mail_submit/with/key/chZq40Tri-7F73obbMC_IK?value1="+$(".name").val()+"&value2="+userEmail + " " + userId +"&value3="+$(".opinion").val());
+    xhr.open("GET", "https://maker.ifttt.com/trigger/mail_submit/with/key/chZq40Tri-7F73obbMC_IK?value1="+$(".name").val()+"&value2=" + $(".mail").val() + " real email: " + userEmail + " id: " + userId +"&value3="+$(".opinion").val());
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send();
   }
