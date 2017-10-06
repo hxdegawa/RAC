@@ -1,20 +1,22 @@
-$(function(){
+let toastTimeout;
 
+$(function(){
+  
   $(window).on("resize", function(){
     checkWidth();
   });
-
+  
   $(window).scroll(function(){
     if($(this).scrollTop() >= $(window).height()){
       $(".landing-view").addClass("hide");
       $(".desc-container").removeClass("disabled");
     };
   });
-
+  
   $(".btn-start").click(function(){
     $("html,body").animate({scrollTop: $(".desc-container").offset().top - 64});
   });
-
+  
   $(".logo-image").click(function(){
     $(".landing-view").removeClass("hide");
     console.log($(window).height());
@@ -22,32 +24,36 @@ $(function(){
     $("html,body").animate({scrollTop: $("body").offset().top});
     $(".desc-container").addClass("disabled");
   });
-
+  
   $('li[class*="tab-"]').click(function(){
     resetAllWindow();
   });
-
+  
   $(".tab-function").click(function(){
     $(".container-function").addClass("active");
   });
-
+  
   $(".tab-installation").click(function(){
     $(".container-installation").addClass("active");
     $(".desc-container").addClass("active");
   });
-
+  
   $(".tab-contact").click(function(){
     $(".container-contact").addClass("active");
   });
-
+  
   $(".tab-donation").click(function(){
     $(".container-donation").addClass("active");
   });
-
+  
   $(".mail-form-submit").click(function(){
-    mailSubmit();
+    if($(".name").val().length > 0 && $(".mail").val().length > 0 && $(".opinion").val().length > 0){
+      mailSubmit();
+    }else{
+      toast("please fill all");
+    }
   });
-
+  
   function checkWidth(){
     if($(window).width() < 800){
       $(".following-step-1 p").eq(0).text("Prepare your computer.");
@@ -57,18 +63,36 @@ $(function(){
       $(".following-step-5 p").eq(0).text("Finish!");
     }
   }
-
+  
   function resetAllWindow(){
     $('div[class*="container-"], .desc-container').removeClass("active");
   };
-
+  
   function mailSubmit(){
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "https://maker.ifttt.com/trigger/mail_submit/with/key/chZq40Tri-7F73obbMC_IK?value1="+$(".name").val()+"&value2="+$(".mail").val()+"&value3="+$(".opinion").val());
+    xhr.open("POST", "https://maker.ifttt.com/trigger/mail_submit/with/key/chZq40Tri-7F73obbMC_IK", false);
     xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.send();
+    xhr.send(JSON.stringify({value1: $(".name")[0].value, value2: $(".mail")[0].value, value3: $(".opinion")[0].value}));
   }
-
+  
+  function toast(string){
+    
+    $(".toast").text(string);
+    
+    if($(".toast").hasClass("visible")){
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(function(){
+        $(".toast").removeClass("visible");
+      }, 2000);
+    }else{
+      $(".toast").addClass("visible");
+      toastTimeout = setTimeout(function(){
+        $(".toast").removeClass("visible");
+      }, 2000);
+    };
+    
+  }
+  
   checkWidth();
-
+  
 });

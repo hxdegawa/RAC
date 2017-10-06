@@ -314,7 +314,7 @@ main{
   width: 500px;
   margin: 8vh auto 40px auto;
   text-align: center;
-  box-shadow: 2px 2px 3px lightgray;
+  box-shadow: 2px 2px 5px lightgray;
 }
 
 .mail-form h2{
@@ -361,8 +361,9 @@ main{
   width: 80%;
   min-height: 220px;
   resize: vertical;
+  outline: none;
   border: none;
-  font-size: 1.6em;
+  font-size: 1.3em;
   background-color: #f0f0f0;
 }
 
@@ -387,6 +388,26 @@ main{
 
 .mail-form-submit:active{
   background-color: var(--lightSubColor);
+}
+
+/*TOAST*/
+
+.toast{
+  position: fixed;
+  right: 0px;
+  bottom: -60px;
+  height: 60px;
+  width: 220px;
+  background-color: #212121;
+  color: #ffffff;
+  text-align: center;
+  font-size: 1.4em;
+  line-height: 60px;
+  transition: 0.4s ease;
+}
+
+.visible{
+  bottom: 0px;
 }
 
 @media (min-width: 300px) and (max-width: 800px){
