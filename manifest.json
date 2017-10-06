@@ -10,7 +10,7 @@
     "default_icon": "icon.png"
   },
   "options_page": "option/options.html",
-  "permissions" : ["tabs", "notifications", "https://maker.ifttt.com/*"],
+  "permissions" : ["tabs", "notifications", "https://maker.ifttt.com/*", "identity", "identity.email"],
   "background": {
     "scripts": ["./jquery-3.2.1.min.js", "./background/background.js"]
   },

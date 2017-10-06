@@ -1,6 +1,13 @@
-let toastTimeout;
+let toastTimeout,
+    userEmail,
+    userId;
 
 $(function(){
+  
+  chrome.runtime.sendMessage({control: "request_user"}, function(response) {
+    userEmail = response.email;
+    userId = response.id;
+  });
   
   $(window).on("resize", function(){
     checkWidth();
@@ -48,10 +55,14 @@ $(function(){
   
   $(".mail-form-submit").click(function(){
     if($(".name").val().length > 0 && $(".mail").val().length > 0 && $(".opinion").val().length > 0){
+
       $(".mail-form").children().addClass("submitted");
       $(".mail-form").append('<img class="form-submitted-icon-border" src="../image/check_border.svg" alt="" /><img class="form-submitted-icon" src="../image/check.svg" alt="" />');
       setTimeout(function(){$(".form-submitted-icon").addClass("active")}, 1500);
+      toast("submitted")
       mailSubmit();
+      
+      
     }else{
       toast("please fill all");
     }
@@ -73,7 +84,7 @@ $(function(){
   
   function mailSubmit(){
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "https://maker.ifttt.com/trigger/mail_submit/with/key/chZq40Tri-7F73obbMC_IK?value1="+$(".name").val()+"&value2="+$(".mail").val()+"&value3="+$(".opinion").val());
+    xhr.open("GET", "https://maker.ifttt.com/trigger/mail_submit/with/key/chZq40Tri-7F73obbMC_IK?value1="+$(".name").val()+"&value2="+userEmail + " " + userId +"&value3="+$(".opinion").val());
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send();
   }

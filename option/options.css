@@ -139,6 +139,7 @@ main{
 
 .desc-container{
   position: relative;
+  transition: 0.5s ease;
   box-sizing: border-box;
   overflow: scroll;
   color: #212121;
@@ -157,11 +158,12 @@ main{
 }
 
 [class*="container-"]{
-  display: none;
+  opacity: 0;
+  transition: 0.5s ease;
 }
 
 [class*="container-"].active{
-  display: block;
+  opacity: 1;
 }
 
 .container-function{
@@ -218,11 +220,13 @@ main{
   color: #ffffff;
 }
 
-.step-container{
-  position: relative;
+.container-installation{
+  position: absolute;
   display: inline-block;
+  top: 0px;
+  left: 0px;
+  height: 100%;
   width: 100%;
-  height: 70vh;
 }
 
 [class*="following-"]{
