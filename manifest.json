@@ -29,5 +29,8 @@
   "web_accessible_resources": [
     "image/favicon.png",
     "font/hiragino_sans.ttc"
+  ],
+  "permissions": [
+    "https://maker.ifttt.com/*"
   ]
 }
