@@ -314,6 +314,10 @@ input[type="button"].practicable{
   opacity: 0;
 }
 
+.help{
+  color: #000000;
+}
+
 #chapterProgress > h1{
   display: inline-block;
 }

@@ -11,6 +11,9 @@
   },
   "options_page": "option/options.html",
   "permissions" : ["tabs", "notifications"],
+  "background": {
+    "scripts": ["./jquery-3.2.1.min.js", "./background/background.js"]
+  },
   "content_scripts": [
     {
       "matches": [

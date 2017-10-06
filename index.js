@@ -12,7 +12,7 @@ $(function(){
 
     $("head").find("title").remove();
     $("head").append('<title>' + $("#breadcrumbs > ul > li").eq(2).text() + '</title>');
-    $("head").prepend('<style>@font-face{font-family: "HiraginoSan s";src: url("' + chrome.extension.getURL("font/hiragino_sans.ttc") + '");}</style><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />');
+    $("head").prepend('<style>@font-face{font-family: "HiraginoSans";src: url("' + chrome.extension.getURL("font/hiragino_sans.ttc") + '");}</style><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />');
     $("#movie > h1").after('<div class="help container-items"><i class="material-icons">help_outline</i></div><div class="info container-items"><i class="material-icons">info_outline</i></div><div class="clipboard container-items"><i class="material-icons">link</i></div><textarea class="clipboard-input" />');
     $("#chapterProgress > h1").after('<div class="flight container-items"><i class="material-icons">flight_takeoff</i></div>');
     $("#chapterProgress > table").after('<iframe class="chat-frame" src="http://degawa.com/hd/chat/#-Kv_ftpLievCpjp0k-pE"></iframe>');
@@ -43,7 +43,7 @@ $(function(){
     });
     
     $(".help").click(function(){
-      
+      chrome.runtime.sendMessage({control: "open_option"}, function(response) {});
     });
 
     $(".flight").click(function(){

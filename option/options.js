@@ -1,7 +1,11 @@
 $(function(){
   
+  $(window).on("resize", function(){
+    checkWidth();
+  });
+  
   $(window).scroll(function(){
-    if($(this).scrollTop() >= 800){
+    if($(this).scrollTop() >= $(window).height()){
       $(".landing-view").addClass("hide");
     };
   });
@@ -24,15 +28,27 @@ $(function(){
   });
   
   $(".tab-contact").click(function(){
-//    $(".container-contact").addClass("active");
+    $(".container-contact").addClass("active");
   });
   
   $(".tab-donation").click(function(){
 //    $(".container-donation").addClass("active");
   });
   
+  function checkWidth(){
+    if($(window).width() < 800){
+      $(".following-step-1 p").eq(0).text("Prepare your computer.");
+      $(".following-step-2 p").eq(0).text("Go to [CHROME EXTENSION LINK].");
+      $(".following-step-3 p").eq(0).text('Click "Add to chrome".');
+      $(".following-step-4 p").eq(0).text("Reload your chrome.");
+      $(".following-step-5 p").eq(0).text("Finish!");
+    }
+  }
+  
   function resetAllWindow(){
     $('div[class*="container-"], .desc-container').removeClass("active");
   };
+  
+  checkWidth();
   
 });
