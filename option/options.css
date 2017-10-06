@@ -170,9 +170,9 @@ main{
 }
 
 .card{
-  height: 350px;
-  float: left;
+  height: 380px;
   width: 350px;
+  float: left;
   margin: 25px;
   box-sizing: border-box;
   padding-top: 16.8px;
