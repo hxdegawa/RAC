@@ -244,6 +244,8 @@ $(function(){
     $(".check-list").click(function(){
       $(".info-list-container").removeClass("visible");
       $(".undone-list-container").toggleClass("visible");
+      $(".controller").removeClass("first-exhibition");
+      $(".controller").removeClass("visible");
       toast("未完了リストを表示");
     });
 
