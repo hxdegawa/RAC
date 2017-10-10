@@ -426,24 +426,69 @@ main{
   left: 0px;
   height: 100%;
   width: 100%;
+  text-align: center;
   overflow: scroll;
 }
 
-.donate-card{
+.donate-cards-container{
   position: relative;
-  width: 65vw;
-  height: 20vh;
+  display: inline-block;
+}
+
+.donate-card{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 500px;
+  display: inline-block;
+  box-shadow: 3px 3px 5px lightgray;
+}
+
+.donate-image-wrapper{
+  height: 150px;
+  width: 150px;
+  display: inline-block;
+  border-radius: 100%;
+  text-align: center;
+  background-color: var(--mainColor);
+  margin: 20px 0px;
+  box-sizing: border-box;
+  padding: 40px;
+  transition: 0.2s ease;
+  box-shadow: 2px 2px 3px lightgray;
+}
+
+.donate-image-wrapper:hover{
+  padding: 0px;
+}
+
+.donate-image-wrapper img{
+  transform: scale(1, 1);
+  transition: 0.2s ease;
+}
+
+.donate-image-wrapper img:hover{
+  transform: scale(1.4, 1.4);
 }
 
 .donate-card img{
-  height: 60px;
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
 }
 
-.donate-desc{
-  text-align: center;
-  width: 42vw;
-  height: 60vh;
-  box-shadow: 3px 3px 5px lightgray;
+.donate-card h2{
+  font-size: 1.9em;
+}
+
+.donate-card p{
+  display: block;
+  box-sizing: border-box;
+  margin: 30px 20%;
+  width: 60%;
+  color: gray;
 }
 
 /*TOAST*/
