@@ -365,4 +365,52 @@ $(function(){
 
   };
 
+  $(window).ready(function(){
+    
+    $("body").append('<div class="display-cover"></div><div class="concealer-input-box"><h2>URLを挿入</h2><input type="text" class="concealer-input" /></div>');
+   
+    chrome.storage.local.get("concealerImage", function(imageLink) {
+      
+      console.log(imageLink);
+      
+      if(imageLink.concealerImage.indexOf("http") >= 0){
+        
+        console.log("image found!");
+        
+        $(".display-cover").eq(0).css("background-image", "url(" + imageLink.concealerImage + ")");
+        $(".concealer-input").eq(0).val(imageLink.concealerImage);
+      
+      }else{
+        console.log("image not found!");
+        $(".display-cover").eq(0).css("background-image", "url(" + chrome.extension.getURL("image/no_image.svg") + ")");
+        
+      };
+    });
+    
+    
+    $(window).keydown(function(e){
+      
+      if(e.keyCode === 219){
+        
+        if(event.shiftKey){
+          
+          chrome.storage.local.set({"concealerImage": $(".concealer-input").eq(0).val()}, function(){});
+          $(".display-cover").eq(0).css("background-image", "url(" + $(".concealer-input").eq(0).val() + ")");
+          
+        }else{
+          
+          $(".display-cover").eq(0).toggleClass("toggled");
+          $(".concealer-input-box").eq(0).removeClass("visible");
+          
+        };
+      };
+      
+      if(e.keyCode === 221){
+        $(".concealer-input-box").eq(0).toggleClass("visible");
+      };
+      
+    });
+
+  });
+  
 });
