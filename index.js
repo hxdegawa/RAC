@@ -377,8 +377,6 @@ $(function(){
 
   $(window).ready(function(){
     
-    $("body").append('<img src="http://anihonetwallpaper.com/image/2016/09/36771-your_name.-PC.jpg" /><div class="display-cover"></div><div class="concealer-input-box"><h2>URLを挿入</h2><input type="text" class="concealer-input" /></div>');
-   
     chrome.storage.local.get("concealerImage", function(imageLink) {
       
       if(imageLink.concealerImage.indexOf("http") >= 0){
