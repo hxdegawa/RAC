@@ -2,6 +2,7 @@ $(function(){
 
   if(location.href.indexOf('https://secure.nnn.ed.jp/') != -1){
     $("head").append('<link type="image/x-icon" rel="shortcut icon" href="' + chrome.extension.getURL("image/favicon.png") + '" />');
+    $("#header > .contents > h1 > a").css("background-image", "url(" + chrome.extension.getURL("image/school_logo.svg") + ")");
   };
 
   if(location.href.indexOf('https://secure.nnn.ed.jp/mypage/report/pc/movie/view?') != -1){
@@ -373,8 +374,6 @@ $(function(){
     $("body").append('<div class="display-cover"></div><div class="concealer-input-box"><h2>URLを挿入</h2><input type="text" class="concealer-input" /></div>');
    
     chrome.storage.local.get("concealerImage", function(imageLink) {
-      
-      console.log(imageLink);
       
       if(imageLink.concealerImage.indexOf("http") >= 0){
         

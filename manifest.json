@@ -36,11 +36,11 @@
       "all_frames": true
     }
   ],
-  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
   "web_accessible_resources": [
     "index.css",
     "image/favicon.png",
     "image/no_image.svg",
+    "image/school_logo.svg",
     "font/hiragino_sans.ttc"
   ]
 }
