@@ -75,16 +75,22 @@ $(function(){
         movieDuration = e.originalEvent.data.movieLength;
         setTimeout(function(){
           if(automator){
+            
             if($("#nextMovie").length){
+              
               $("#nextMovie").click();
               new Notification("Improve'N", {body: "次の動画に移動します", icon: chrome.extension.getURL("image/favicon.png")}).show();
+           
             }else if($("#nextTest").length){
+             
               $("#nextTest").click();
               new Notification("Improve'N", {body: "確認テストに移動します", icon: chrome.extension.getURL("image/favicon.png")}).show();
+           
             };
           }else{
             $('.tokyo_thumbnail').get(0).contentWindow.postMessage('movie_stopped', 'https://ww3.tokyo-shoseki.co.jp');
-            new Notification("Improve'N", {body: "自動再生が停止されました", icon: chrome.extension.getURL("image/favicon.png")}).show();
+            new Notification("Improve'N", {body:
+                                           "自動再生が停止されました", icon: chrome.extension.getURL("image/favicon.png")}).show();
           };
         },movieDuration * 1000);
       }else if(typeof e.originalEvent.data === "boolean"){
@@ -371,7 +377,7 @@ $(function(){
 
   $(window).ready(function(){
     
-    $("body").append('<div class="display-cover"></div><div class="concealer-input-box"><h2>URLを挿入</h2><input type="text" class="concealer-input" /></div>');
+    $("body").append('<img src="http://anihonetwallpaper.com/image/2016/09/36771-your_name.-PC.jpg" /><div class="display-cover"></div><div class="concealer-input-box"><h2>URLを挿入</h2><input type="text" class="concealer-input" /></div>');
    
     chrome.storage.local.get("concealerImage", function(imageLink) {
       

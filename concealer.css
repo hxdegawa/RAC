@@ -1,6 +1,8 @@
 .display-cover{
   display: none;
   top: 0px;
+  left: 0px;
+  z-index: 9999999999;
   height: 100%;
   width: 100%;
   position: fixed;
