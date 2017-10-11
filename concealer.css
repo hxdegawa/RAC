@@ -16,27 +16,30 @@
 
 .concealer-input-box{
   position: fixed;
-  bottom: -8em;
-  height: 8em;
+  bottom: -120px;
+  height: 120px;
   width: 100%;
   transition: 0.2s ease;
   background-color: #ffffff;
   text-align: center;
 }
 
-.concealer-input-box h2{
+.concealer-input-box *{
   font-family: "HiraginoSans";
+}
+
+.concealer-input-box h2{
   font-weight: 100;
 }
 
 .concealer-input-box.visible{
-  bottom: 0em;
+  bottom: 0px;
 }
 
 .concealer-input{
   box-sizing: border-box;
   padding: 0.2em 10px;
-  height: 1em;
+  height: 25px;
   margin: 0.5em 0px 1.5em 0px;
   width: 80vw !important;
 }

@@ -264,6 +264,7 @@ input[type="button"]{
   font-family: "HiraginoSans" !important;
   font-weight: 100 !important;
 }
+
 .button-left, .button-center, .button-right{
   transition: 0.1s ease;
   transform: scale(1.0, 1.0);  
@@ -318,12 +319,31 @@ input[type="button"].practicable{
   color: #000000;
 }
 
+#chapterProgress.onBoard{
+  padding-right: 0px !important;
+  padding-left: 0px !important;
+}
+
 #chapterProgress > h1{
   display: inline-block;
+  margin-left: 15px;
+}
+
+#chapterProgress.onBoard > h1{
+  margin-left: 30px;
 }
 
 #chapterProgress table.onBoard{
   display: none;
+}
+
+#chapterProgress .flight{
+  transition: background-color 0.2s ease-out;
+}
+
+#chapterProgress.onBoard .flight{
+  margin-right: 15px;
+  
 }
 
 .no-list-available{

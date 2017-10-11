@@ -20,6 +20,8 @@ $(function(){
     $("#movie_view_").val("前の動画");
     $("#nextMovie").val("次の動画");
     $("#nextTest").val("確認テスト");
+    
+    $(".section > p").remove();
 
     // request notification permission
 
@@ -49,6 +51,7 @@ $(function(){
     $(".flight").click(function(){
       isFlighted = !isFlighted;
       $("#chapterProgress > table").toggleClass("onBoard");
+      $("#chapterProgress").toggleClass("onBoard")
       $(".chat-frame").toggleClass("onBoard");
 
       if(isFlighted){
@@ -375,13 +378,11 @@ $(function(){
       
       if(imageLink.concealerImage.indexOf("http") >= 0){
         
-        console.log("image found!");
-        
         $(".display-cover").eq(0).css("background-image", "url(" + imageLink.concealerImage + ")");
         $(".concealer-input").eq(0).val(imageLink.concealerImage);
       
       }else{
-        console.log("image not found!");
+
         $(".display-cover").eq(0).css("background-image", "url(" + chrome.extension.getURL("image/no_image.svg") + ")");
         
       };
