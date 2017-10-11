@@ -112,7 +112,8 @@ $(function(){
     let control = {
     fastForward: false,
      fastRewind: false,
-          muted: false
+          muted: false,
+         paused: false
     },
         volumeStatus = [
           {"status": "最大", "volume": 1, "icon": "volume_up"},
@@ -130,7 +131,7 @@ $(function(){
         keyName;
 
     $("body").append('<div class="movie-toast"><span></span></div><div id="movie-controller"></div><div class="undone-list-container movie-cover"><h1>未完了レポート</h1><div class="undone-list-container-close"><i class="material-icons">close</i></div></div><div class="info-list-container movie-cover"><h1>単元目的</h1><div class="info-list-container-close"><i class="material-icons">close</i></div></div>');
-    $("body").prepend('<div class="controller"><div class="controller-inner-container"><div class="progress-bar-container"><div class="progress-bar"></div></div><p><span class="movie-time"></span><span> / </span><span class="movie-duration"></span></p><div class="mute"><i class="material-icons icon-mute">volume_up</i></div></div></div>');
+    $("body").prepend('<div class="controller"><div class="controller-inner-container"><div class="progress-bar-container"><div class="progress-bar"></div></div><p><span class="movie-time"></span><span> / </span><span class="movie-duration"></span></p><div class="pause"><i class="material-icons icon-pause">pause</i></div><div class="mute"><i class="material-icons icon-mute">volume_up</i></div></div></div>');
     $("head").prepend('<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />');
     $("#movie-controller").append('<div class="swich-controller swich-left"><i class="material-icons">chevron_left</i></div><div class="swich-controller control"><i class="material-icons">videogame_asset</i></div><div class="swich-controller master"><i class="material-icons">settings</i></div><div class="swich-controller volume"><i class="material-icons volume-icon">volume_up</i></div><div class="swich-controller swich-right"><i class="material-icons">chevron_right</i></div><br /><div class="swich-controller col5 rate-left"><i class="material-icons">fast_rewind</i></div><div class="swich-controller col5 automate"><i class="material-icons icon-automate">explore</i></div><div class="swich-controller col5 fullscreen"><i class="material-icons">fullscreen</i></div><div class="swich-controller col5 check-list"><i class="material-icons">list</i></div><a class="movie-download-link" target="_blank"><div class="swich-controller col5 download"><i class="material-icons">file_download</i></div></a><div class="swich-controller col5 rate-right"><i class="material-icons">fast_forward</i></div>');
 
@@ -229,11 +230,25 @@ $(function(){
       if(control.muted){
         document.getElementsByTagName("video")[0].muted = true;
         $(".icon-mute").text("volume_off");
+        toast("音声をミュート");
       }else{
         document.getElementsByTagName("video")[0].muted = false;
         $(".icon-mute").text("volume_up");
+        toast("ミュートを解除");
       };
-      toast("音声をミュート");
+    });
+    
+    $(".pause").click(function(){
+      control.paused = !control.paused;
+      if(control.paused){
+        document.getElementsByTagName("video")[0].pause();
+        $(".icon-pause").text("play_arrow");
+        toast("動画を停止");
+      }else{
+        document.getElementsByTagName("video")[0].play();
+        $(".icon-pause").text("pause");
+        toast("動画を再開");
+      };
     });
 
     $(".automate").click(function(){
@@ -377,6 +392,8 @@ $(function(){
 
   $(window).ready(function(){
     
+    $("body").append('<div class="display-cover"></div><div class="concealer-input-box"><h2>URLを挿入</h2><input type="text" class="concealer-input" /></div>');
+   
     chrome.storage.local.get("concealerImage", function(imageLink) {
       
       if(imageLink.concealerImage.indexOf("http") >= 0){

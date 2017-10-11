@@ -243,7 +243,7 @@ iframe{
   font-size: 1.1;
 }
 
-.mute{
+.mute, .pause{
   float: right;
   height: 25px;
   width: 25px;
@@ -252,7 +252,7 @@ iframe{
   text-align: center;
 }
 
-.mute i{
+.mute i, .pause i{
   vertical-align: top;
   line-height: 25px; 
 }
