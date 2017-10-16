@@ -1,8 +1,35 @@
 $(function(){
 
   if(location.href.indexOf('https://secure.nnn.ed.jp/') != -1){
+  
     $("head").append('<link type="image/x-icon" rel="shortcut icon" href="' + chrome.extension.getURL("image/favicon.png") + '" />');
     $("#header > .contents > h1 > a").css("background-image", "url(" + chrome.extension.getURL("image/school_logo.svg") + ")");
+    $("#contents").prepend('<div class="status-checker"><h2>Loading...</h2></div>');
+    
+    $(window).scroll(function(e){
+      if($(window).scrollTop() > 74){
+        $(".status-checker").addClass("aligned");
+      }else{
+        $(".status-checker").removeClass("aligned");
+      }
+    })
+    
+    $.ajax({
+      type: 'GET',
+      url: "https://secure.nnn.ed.jp/mypage/report/pc/list/index",
+      dataType: 'html',
+      success: function(data) {
+        var result = $($.parseHTML(data));
+        var maximumPercentage = result.eq(9).find(".comp > a").length + result.eq(9).find(".normal > a").length;
+        var compPercentage = ((result.eq(9).find(".comp > a").length / maximumPercentage) * 100).toFixed(0);
+
+        $(".status-checker > h2").text(compPercentage + "% 完了");
+
+      }, error:function(e) {
+        console.log(e);
+      }
+    });
+    
   };
 
   if(location.href.indexOf('https://secure.nnn.ed.jp/mypage/report/pc/movie/view?') != -1){

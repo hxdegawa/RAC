@@ -15,6 +15,35 @@ iframe{
   overflow: hidden;
 }
 
+#contents{
+  position: relative;
+}
+
+.status-checker{
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 160px;
+  height: 64px;
+  box-sizing: border-box;
+  padding-left: 30px;
+  text-align: center;
+  border-radius: 0px 0px 0px 64px;
+  background-color: #34495e;
+}
+
+.status-checker.aligned{
+  position: fixed;
+  right: 0px;
+  top: 0px;
+}
+
+.status-checker h2{
+  line-height: 64px;
+  color: #ffffff;
+  margin: 0px;
+}
+
 /*Tokyo-shoseki*/
 
 #movie-controller{
