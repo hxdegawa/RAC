@@ -94,6 +94,7 @@ $(function(){
 
       if(e.originalEvent.data === "check"){
         if(typeof $("#nextMovie").attr("disabled") === "string"){
+          $(".button-right").css("pointer-events", "none");
           $('.tokyo_thumbnail').get(0).contentWindow.postMessage('not_done', 'https://ww3.tokyo-shoseki.co.jp');
         }else{
           $('.tokyo_thumbnail').get(0).contentWindow.postMessage('already_done', 'https://ww3.tokyo-shoseki.co.jp');

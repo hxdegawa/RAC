@@ -15,35 +15,6 @@ iframe{
   overflow: hidden;
 }
 
-#contents{
-  position: relative;
-}
-
-.status-checker{
-  position: absolute;
-  right: 0px;
-  top: 0px;
-  width: 160px;
-  height: 64px;
-  box-sizing: border-box;
-  padding-left: 25px;
-  text-align: center;
-  border-radius: 0px 0px 0px 64px;
-  background-color: #212121;
-}
-
-.status-checker.aligned{
-  position: fixed;
-  right: 0px;
-  top: 0px;
-}
-
-.status-checker h2{
-  line-height: 64px;
-  color: #ffffff;
-  margin: 0px;
-}
-
 /*Tokyo-shoseki*/
 
 #movie-controller{
@@ -294,6 +265,35 @@ input[type="button"]{
   font-weight: 100 !important;
 }
 
+#contents{
+  position: relative;
+}
+
+.status-checker{
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 160px;
+  height: 64px;
+  box-sizing: border-box;
+  padding-left: 25px;
+  text-align: center;
+  border-radius: 0px 0px 0px 64px;
+  background-color: #212121;
+}
+
+.status-checker.aligned{
+  position: fixed;
+  right: 0px;
+  top: 0px;
+}
+
+.status-checker h2{
+  line-height: 64px;
+  color: #ffffff;
+  margin: 0px;
+}
+
 .button-left, .button-center, .button-right{
   transition: 0.1s ease;
   transform: scale(1.0, 1.0);  
@@ -303,8 +303,8 @@ input[type="button"]{
   transform: scale(1.05, 1.05);
 }
 
-input[type="button"].impracticable{
-  background-color: #424242;
+input[type="button"].practicable.impracticable{
+  background-color: #7f8c8d !important;
   cursor: default;
 }
 
