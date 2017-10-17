@@ -52,15 +52,11 @@ $(function(){
     $(".section > p").remove();
 
     // request notification permission
-
-    $(function(){
-
+    
       if(Notification.permission === 'default'){
         Notification.requestPermission();
       };
-
-    });
-
+    
     $(".clipboard").click(function(){
       $(".clipboard-input").eq(0).val(window.location.href);
       $(".clipboard-input").eq(0).select();
@@ -150,6 +146,7 @@ $(function(){
         ],
         unFinishedTitle = [],
         unFinishedURL = [],
+        movieLength = 0,
         volumeIndex = 1,
         controllerVisible = false,
         automated = true,
@@ -159,14 +156,14 @@ $(function(){
         keyName;
 
     $("body").append('<div class="movie-toast"><span></span></div><div id="movie-controller"></div><div class="undone-list-container movie-cover"><h1>未完了レポート</h1><div class="undone-list-container-close"><i class="material-icons">close</i></div></div><div class="info-list-container movie-cover"><h1>単元目的</h1><div class="info-list-container-close"><i class="material-icons">close</i></div></div>');
-    $("body").prepend('<div class="controller"><div class="controller-inner-container"><div class="progress-bar-container"><div class="progress-bar"></div></div><p><span class="movie-time"></span><span> / </span><span class="movie-duration"></span></p><div class="pause"><i class="material-icons icon-pause">pause</i></div><div class="mute"><i class="material-icons icon-mute">volume_up</i></div></div></div>');
+    $("body").prepend('<div class="controller"><div class="controller-inner-container"><div class="progress-bar-container"><div class="progress-bar"></div></div><div class="exact-bar-container"><div class="exact-bar"></div></div><p><span class="movie-time"></span><span> / </span><span class="movie-duration"></span></p><div class="pause"><i class="material-icons icon-pause">pause</i></div><div class="mute"><i class="material-icons icon-mute">volume_up</i></div></div></div>');
     $("head").prepend('<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />');
     $("#movie-controller").append('<div class="swich-controller swich-left"><i class="material-icons">chevron_left</i></div><div class="swich-controller control"><i class="material-icons">videogame_asset</i></div><div class="swich-controller master"><i class="material-icons">settings</i></div><div class="swich-controller volume"><i class="material-icons volume-icon">volume_up</i></div><div class="swich-controller swich-right"><i class="material-icons">chevron_right</i></div><br /><div class="swich-controller col5 rate-left"><i class="material-icons">fast_rewind</i></div><div class="swich-controller col5 automate"><i class="material-icons icon-automate">explore</i></div><div class="swich-controller col5 fullscreen"><i class="material-icons">fullscreen</i></div><div class="swich-controller col5 check-list"><i class="material-icons">list</i></div><a class="movie-download-link" target="_blank"><div class="swich-controller col5 download"><i class="material-icons">file_download</i></div></a><div class="swich-controller col5 rate-right"><i class="material-icons">fast_forward</i></div>');
 
     //  create list of undone report
 
     $(function(){
-
+      
       $.ajax({
         type: 'GET',
         url: "https://secure.nnn.ed.jp/mypage/report/pc/list/index",
