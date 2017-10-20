@@ -332,6 +332,8 @@ $(function(){
       if(e.originalEvent.data === "already_done"){
         toast("復習動画");
       }else if(e.originalEvent.data === "not_done"){
+        automated = false;
+        $(".control, .swich-right, .swich-left, .fullscreen, .automate, .rate-right, .rate-left").remove();
         toast("初視聴動画");
       }else if(e.originalEvent.data === "movie_stopped"){
         toast("自動進行停止");
