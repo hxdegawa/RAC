@@ -472,6 +472,7 @@ main{
 .donate-image-wrapper img{
   transform: scale(1, 1);
   transition: 0.2s ease;
+  cursor: none;
 }
 
 .donate-image-wrapper img:hover{
@@ -494,6 +495,11 @@ main{
   margin: 30px 20%;
   width: 60%;
   color: gray;
+}
+
+.donate-card p a{
+  color: #3498db;
+  text-decoration: none;
 }
 
 /*TOAST*/

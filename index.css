@@ -188,9 +188,9 @@ iframe{
 .controller{
   position: absolute;
   z-index: 10;
-  top: -72px;
+  top: -60px;
   width: 100%;
-  height: 72px;
+  height: 60px;
   transition: 0.3s ease;
   background-color: #212121;
   color: #ffffff;
@@ -222,7 +222,7 @@ iframe{
   padding-left: 10px;
 }
 
-.progress-bar-container, .exact-bar-container{
+.progress-bar-container{
   position: relative;
   cursor: pointer;
   margin: 0px 2% 0px 2%;
@@ -231,20 +231,12 @@ iframe{
   background-color: #000000;
 }
 
-.exact-bar-container{
-  margin-top: 12px;
-}
-
-.progress-bar, .exact-bar{
+.progress-bar{
   position: absolute;
   top: 0px;
   width: 0%;
   height: 6px;
   background-color: #c0392b;
-}
-
-.exact-bar{
-  background-color: #2980b9;
 }
 
 .movie-time{
@@ -389,6 +381,7 @@ input[type="button"].practicable{
 }
 
 .chat-frame{
+  position: relative;
   width: 100%;
   height: 550px;
   border: none;
@@ -397,4 +390,11 @@ input[type="button"].practicable{
 
 .chat-frame.onBoard{
   display: block;
+}
+
+.chat-comingsoon{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
