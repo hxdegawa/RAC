@@ -1,11 +1,11 @@
 $(function(){
 
   if(location.href.indexOf('https://secure.nnn.ed.jp/') != -1){
-  
+
     $("head").append('<link type="image/x-icon" rel="shortcut icon" href="' + chrome.extension.getURL("image/favicon.png") + '" />');
     $("#header > .contents > h1 > a").css("background-image", "url(" + chrome.extension.getURL("image/school_logo.svg") + ")");
     $("#contents").prepend('<div class="status-checker"><h2>Loading...</h2></div>');
-    
+
     $(window).scroll(function(e){
       if($(window).scrollTop() > 74){
         $(".status-checker").addClass("aligned");
@@ -13,7 +13,7 @@ $(function(){
         $(".status-checker").removeClass("aligned");
       }
     })
-    
+
     $.ajax({
       type: 'GET',
       url: "https://secure.nnn.ed.jp/mypage/report/pc/list/index",
@@ -29,7 +29,7 @@ $(function(){
         console.log(e);
       }
     });
-    
+
   };
 
   if(location.href.indexOf('https://secure.nnn.ed.jp/mypage/report/pc/movie/view?') != -1){
@@ -48,15 +48,15 @@ $(function(){
     $("#movie_view_").val("前の動画");
     $("#nextMovie").val("次の動画");
     $("#nextTest").val("確認テスト");
-    
+
     $(".section > p").remove();
 
     // request notification permission
-    
+
       if(Notification.permission === 'default'){
         Notification.requestPermission();
       };
-    
+
     $(".clipboard").click(function(){
       $(".clipboard-input").eq(0).val(window.location.href);
       $(".clipboard-input").eq(0).select();
@@ -67,7 +67,7 @@ $(function(){
     $(".info").click(function(){
       $('.tokyo_thumbnail').get(0).contentWindow.postMessage($(".section > p").eq(1).text().replace(/\n/g, "").replace(/"/g, "").replace(/，/g, "、").split("・").splice(1, $(".section > p").eq(1).text().split("・").length), 'https://ww3.tokyo-shoseki.co.jp');
     });
-    
+
     $(".help").click(function(){
       chrome.runtime.sendMessage({control: "open_option"}, function(response) {});
     });
@@ -86,6 +86,10 @@ $(function(){
       };
     });
 
+    $("memo").click(function(){
+
+    });
+
     $(window).on("message", function(e){
 
       if(e.originalEvent.data === "check"){
@@ -99,17 +103,17 @@ $(function(){
         movieDuration = e.originalEvent.data.movieLength;
         setTimeout(function(){
           if(automator){
-            
+
             if($("#nextMovie").length){
-              
+
               $("#nextMovie").click();
               new Notification("Improve'N", {body: "次の動画に移動します", icon: chrome.extension.getURL("image/favicon.png")}).show();
-           
+
             }else if($("#nextTest").length){
-             
+
               $("#nextTest").click();
               new Notification("Improve'N", {body: "確認テストに移動します", icon: chrome.extension.getURL("image/favicon.png")}).show();
-           
+
             };
           }else{
             $('.tokyo_thumbnail').get(0).contentWindow.postMessage('movie_stopped', 'https://ww3.tokyo-shoseki.co.jp');
@@ -163,7 +167,7 @@ $(function(){
     //  create list of undone report
 
     $(function(){
-      
+
       $.ajax({
         type: 'GET',
         url: "https://secure.nnn.ed.jp/mypage/report/pc/list/index",
@@ -262,7 +266,7 @@ $(function(){
         toast("ミュートを解除");
       };
     });
-    
+
     $(".pause").click(function(){
       control.paused = !control.paused;
       if(control.paused){
@@ -418,47 +422,47 @@ $(function(){
   };
 
 //  $(window).ready(function(){
-//    
+//
 //    $("body").append('<div class="display-cover"></div><div class="concealer-input-box"><h2>URLを挿入</h2><input type="text" class="concealer-input" /></div>');
-//   
+//
 //    chrome.storage.local.get("concealerImage", function(imageLink) {
-//      
+//
 //      if(imageLink.concealerImage.indexOf("http") >= 0){
-//        
+//
 //        $(".display-cover").eq(0).css("background-image", "url(" + imageLink.concealerImage + ")");
 //        $(".concealer-input").eq(0).val(imageLink.concealerImage);
-//      
+//
 //      }else{
 //
 //        $(".display-cover").eq(0).css("background-image", "url(" + chrome.extension.getURL("image/no_image.svg") + ")");
-//        
+//
 //      };
 //    });
-//    
-//    
+//
+//
 //    $(window).keydown(function(e){
-//      
+//
 //      if(e.keyCode === 219){
-//        
+//
 //        if(event.shiftKey){
-//          
+//
 //          chrome.storage.local.set({"concealerImage": $(".concealer-input").eq(0).val()}, function(){});
 //          $(".display-cover").eq(0).css("background-image", "url(" + $(".concealer-input").eq(0).val() + ")");
-//          
+//
 //        }else{
-//          
+//
 //          $(".display-cover").eq(0).toggleClass("toggled");
 //          $(".concealer-input-box").eq(0).removeClass("visible");
-//          
+//
 //        };
 //      };
-//      
+//
 //      if(e.keyCode === 221){
 //        $(".concealer-input-box").eq(0).toggleClass("visible");
 //      };
-//      
+//
 //    });
 //
 //  });
-  
+
 });
