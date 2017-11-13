@@ -414,7 +414,7 @@ $(function(){
           $(".mute").click();
         break;
         case " " || "　":
-          // stoping the movie func by space key
+          $('.material-icons.icon-pause').click();
         break;
       }
     });
