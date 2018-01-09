@@ -1,3 +1,24 @@
+function commentToStrings( inputFunc ) {
+  return inputFunc.toString().match(/\/\*([^]*)\*\//)[1];
+}
+
+function getUrlVars( targetLocation ) {
+    var vars = [], hash;
+    if (targetLocation === undefined) {
+      var locationHref = window.location.href;
+    }else{
+      var locationHref = window[targetLocation].location.href
+    }
+    var hashes = locationHref.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}
+
 $(function(){
 
   if(location.href.indexOf('https://secure.nnn.ed.jp/') != -1){
@@ -34,20 +55,33 @@ $(function(){
 
   if(location.href.indexOf('https://secure.nnn.ed.jp/mypage/report/pc/movie/view?') != -1){
 
-    let automator = true,
+    let automator = (true /*getUrlVars()['rac_auto'] === 'true'*/) ? true : false,
         isFlighted = false,
         movieDuration = 0;
 
     $("head").find("title").remove();
-    $("head").append('<title>' + $("#breadcrumbs > ul > li").eq(2).text() + '</title>');
-    $("head").prepend('<style>@font-face{font-family: "HiraginoSans";src: url("' + chrome.extension.getURL("font/hiragino_sans.ttc") + '");}</style><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />');
-    $("#movie > h1").after('<div class="help container-items"><i class="material-icons">help_outline</i></div><div class="info container-items"><i class="material-icons">info_outline</i></div><div class="clipboard container-items"><i class="material-icons">link</i></div><textarea class="clipboard-input" />');
+    $("head").append(`<title>${$("#breadcrumbs > ul > li").eq(2).text()}</title>`);
+    $("head").prepend(`<style>@font-face{font-family: "HiraginoSans";src: url("'${chrome.extension.getURL("font/hiragino_sans.ttc")}'");}</style><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />`);
+    $("#movie > h1").after(commentToStrings(()=>{/*
+      <div class="help container-items">
+        <i class="material-icons">help_outline</i>
+      </div>
+      <div class="info container-items">
+        <i class="material-icons">info_outline</i>
+      </div>
+      <div class="clipboard container-items">
+        <i class="material-icons">link</i>
+      </div>
+      <textarea class="clipboard-input" />
+    */}));
     $("#chapterProgress > h1").after('<div class="flight container-items"><i class="material-icons">flight_takeoff</i></div>');
-    $("#chapterProgress > table").after('<div class="chat-frame"><span class="chat-comingsoon">Coming soon!</span></div>');
+    $("#chapterProgress > table").after(`<div class="chat-frame"><iframe style="width:100%;height:100%;" scrolling="no" frameborder="0" allowtransparency="true" hspace="0" vspace="0" marginheight="0" marginwidth="0" src="https://www.wireclub.com/chat-rooms/NhsRac${getUrlVars()['chapterId']}/embed"></iframe></div>`);
 
+    /*
     $("#movie_view_").val("前の動画");
     $("#nextMovie").val("次の動画");
     $("#nextTest").val("確認テスト");
+    */
 
     $(".section > p").remove();
 
@@ -92,6 +126,13 @@ $(function(){
 
     $(window).on("message", function(e){
 
+      if ( automator ) {
+        $('#movie_view').children('fieldset').children('p.button-right').children('input').attr('data-dw-href', $('#movie_view').children('fieldset').children('p.button-right').children('input').attr('data-dw-href').replace('&rac_auto=true', ''));
+        $('#movie_view').children('fieldset').children('p.button-right').children('input').attr('data-dw-href', `${$('#movie_view').children('fieldset').children('p.button-right').children('input').attr('data-dw-href')}&rac_auto=true`);
+      }else{
+        $('#movie_view').children('fieldset').children('p.button-right').children('input').attr('data-dw-href', $('#movie_view').children('fieldset').children('p.button-right').children('input').attr('data-dw-href').replace('&rac_auto=true', ''));
+      }
+
       if(e.originalEvent.data === "check"){
         if(typeof $("#nextMovie").attr("disabled") === "string"){
           $(".button-right").css("pointer-events", "none");
@@ -117,8 +158,7 @@ $(function(){
             };
           }else{
             $('.tokyo_thumbnail').get(0).contentWindow.postMessage('movie_stopped', 'https://ww3.tokyo-shoseki.co.jp');
-            new Notification("Improve'N", {body:
-                                           "自動再生が停止されました", icon: chrome.extension.getURL("image/favicon.png")}).show();
+            new Notification("Improve'N", {body: "自動再生が停止されました", icon: chrome.extension.getURL("image/favicon.png")}).show();
           };
         },movieDuration * 1000);
       }else if(typeof e.originalEvent.data === "boolean"){
@@ -153,16 +193,97 @@ $(function(){
         movieLength = 0,
         volumeIndex = 1,
         controllerVisible = false,
-        automated = true,
+        automated = (true /*getUrlVars('top')['rac_auto'] == 'true'*/) ? true : false,
         toastShow,
         exhibition,
         keyCode,
         keyName;
 
-    $("body").append('<div class="movie-toast"><span></span></div><div id="movie-controller"></div><div class="undone-list-container movie-cover"><h1>未完了レポート</h1><div class="undone-list-container-close"><i class="material-icons">close</i></div></div><div class="info-list-container movie-cover"><h1>単元目的</h1><div class="info-list-container-close"><i class="material-icons">close</i></div></div>');
-    $("body").prepend('<div class="controller"><div class="controller-inner-container"><div class="progress-bar-container"><div class="progress-bar"></div></div><p><span class="movie-time"></span><span> / </span><span class="movie-duration"></span></p><div class="pause"><i class="material-icons icon-pause">pause</i></div><div class="mute"><i class="material-icons icon-mute">volume_up</i></div></div></div>');
+    $("body").append(commentToStrings(()=>{/*
+      <div class="movie-toast">
+        <span>
+        </span>
+      </div>
+      <div id="movie-controller">
+      </div>
+      <div class="undone-list-container movie-cover">
+        <h1>未完了レポート</h1>
+        <div class="undone-list-container-close">
+          <i class="material-icons">close</i>
+        </div>
+      </div>
+      <div class="info-list-container movie-cover">
+        <h1>単元目的</h1>
+        <div class="info-list-container-close">
+          <i class="material-icons">close</i>
+        </div>
+      </div>
+    */}));
+
+    $("body").prepend(commentToStrings(()=>{/*
+      <div class="controller">
+        <div class="controller-inner-container">
+          <div class="progress-bar-container">
+            <div class="progress-bar">
+            </div>
+          </div>
+          <p>
+            <span class="movie-time">
+            </span>
+            <span> / </span>
+            <span class="movie-duration">
+            </span>
+          </p>
+          <div class="pause">
+            <i class="material-icons icon-pause">pause</i>
+          </div>
+          <div class="mute">
+            <i class="material-icons icon-mute">volume_up</i>
+          </div>
+        </div>
+      </div>
+    */}));
+
     $("head").prepend('<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />');
-    $("#movie-controller").append('<div class="swich-controller swich-left"><i class="material-icons">chevron_left</i></div><div class="swich-controller control"><i class="material-icons">videogame_asset</i></div><div class="swich-controller master"><i class="material-icons">settings</i></div><div class="swich-controller volume"><i class="material-icons volume-icon">volume_up</i></div><div class="swich-controller swich-right"><i class="material-icons">chevron_right</i></div><br /><div class="swich-controller col5 rate-left"><i class="material-icons">fast_rewind</i></div><div class="swich-controller col5 automate"><i class="material-icons icon-automate">explore</i></div><div class="swich-controller col5 fullscreen"><i class="material-icons">fullscreen</i></div><div class="swich-controller col5 check-list"><i class="material-icons">list</i></div><a class="movie-download-link" target="_blank"><div class="swich-controller col5 download"><i class="material-icons">file_download</i></div></a><div class="swich-controller col5 rate-right"><i class="material-icons">fast_forward</i></div>');
+
+    $("#movie-controller").append(commentToStrings(()=>{/*
+      <div class="swich-controller swich-left">
+        <i class="material-icons">chevron_left</i>
+      </div>
+      <div class="swich-controller control">
+        <i class="material-icons">videogame_asset</i>
+      </div>
+      <div class="swich-controller master">
+        <i class="material-icons">settings</i>
+      </div>
+      <div class="swich-controller volume">
+        <i class="material-icons volume-icon">volume_up</i>
+      </div>
+      <div class="swich-controller swich-right">
+        <i class="material-icons">chevron_right</i>
+      </div>
+      <br />
+      <div class="swich-controller col5 rate-left">
+        <i class="material-icons">fast_rewind</i>
+      </div>
+      <div class="swich-controller col5 automate">
+        <i class="material-icons icon-automate">explore</i>
+      </div>
+      <div class="swich-controller col5 fullscreen">
+        <i class="material-icons">fullscreen</i>
+      </div>
+      <div class="swich-controller col5 check-list">
+        <i class="material-icons">list</i>
+      </div>
+      <a class="movie-download-link" target="_blank">
+        <div class="swich-controller col5 download">
+          <i class="material-icons">file_download</i>
+        </div>
+      </a>
+      <div class="swich-controller col5 rate-right">
+        <i class="material-icons">fast_forward</i>
+      </div>
+    */}));
 
     //  create list of undone report
 
@@ -404,10 +525,10 @@ $(function(){
         case "A":
           $(".swich-controller.col5.automate").click();
         break;
-        case "5":
+        case "2" || "２":
           $(".swich-controller.col5.rate-right").click();
         break;
-        case "2":
+        case "5" || "５":
           $(".swich-controller.col5.rate-left").click();
         break;
         case "M":

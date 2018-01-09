@@ -254,16 +254,18 @@ iframe{
 
 .mute i, .pause i{
   vertical-align: top;
-  line-height: 25px; 
+  line-height: 25px;
 }
 
 /*nnn.ed.jp*/
 
+/*
 input[type="button"]{
   border-radius: 0px !important;
   font-family: "HiraginoSans" !important;
   font-weight: 100 !important;
 }
+*/
 
 #contents{
   position: relative;
@@ -296,13 +298,14 @@ input[type="button"]{
 
 .button-left, .button-center, .button-right{
   transition: 0.1s ease;
-  transform: scale(1.0, 1.0);  
+  transform: scale(1.0, 1.0);
 }
 
 .button-left:hover, .button-center:hover, .button-right:hover{
   transform: scale(1.05, 1.05);
 }
 
+/*
 input[type="button"].practicable.impracticable{
   background-color: #7f8c8d !important;
   cursor: default;
@@ -311,6 +314,7 @@ input[type="button"].practicable.impracticable{
 input[type="button"].practicable{
   background-color: #212121;
 }
+*/
 
 #movie > h1{
   display: inline-block;
@@ -372,7 +376,7 @@ input[type="button"].practicable{
 
 #chapterProgress.onBoard .flight{
   margin-right: 15px;
-  
+
 }
 
 .no-list-available{
